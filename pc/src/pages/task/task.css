@@ -1,0 +1,26 @@
+.card{
+    width: 100%;
+    margin-bottom: 20px;
+}
+.status_select{
+    width: 100px !important;
+}
+.fr{
+    float: right;
+}
+.no_margin_item{
+    margin-right: 0 !important;
+}
+.search_form{
+    margin-bottom: 24px;
+}
+.operate_btn{
+    margin-right: 16px;
+}
+.table{
+    min-height: calc(100vh - 316px);
+    margin-bottom: 0;
+}
+.btn_group{
+    display: flex;
+}

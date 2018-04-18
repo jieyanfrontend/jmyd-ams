@@ -1,0 +1,7 @@
+{
+  "vendor": ["react", "react-dom", "react-router-dom", "moment"],
+  "port": "8070",
+  "proxy": {
+    "/api": "http://120.237.31.12:8327/"
+  }
+}

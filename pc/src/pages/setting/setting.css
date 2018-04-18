@@ -1,0 +1,17 @@
+.card{
+    width: 100%;
+}
+.form_item {
+    display: flex !important;
+}
+.search_form{
+    /*margin-bottom: 24px;*/
+}
+.form_item :global(.ant-form-item-control-wrapper) {
+    flex: 1;
+}
+.system_btn_group{
+    margin-top: 150px;
+    width: 100%;
+    text-align: center;
+}
