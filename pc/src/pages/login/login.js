@@ -87,5 +87,3 @@ class Login extends React.Component{
         return Object.keys(fieldsError).some(field => fieldsError[field]);
     }
 }
-let LoginForm = Form.create()(Login);
-export default LoginForm;
