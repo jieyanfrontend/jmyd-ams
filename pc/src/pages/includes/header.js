@@ -12,6 +12,9 @@ class Header extends Component{
                         mode="horizontal"
                         className={style.menu}
                     >
+                        <Menu.Item key='app'>
+                            <Link to='/app'>ams工单</Link>
+                        </Menu.Item>
                         <Menu.Item key='setting'>
                             <Link to='/setting'>设置</Link>
                         </Menu.Item>

@@ -18,6 +18,8 @@ class App extends Component {
                             <Route path='/task' render={() => <WrapperComponent Comp={import('./task/task')} name='task'/>}/>
                             <Route path='/setting' render={() => <WrapperComponent Comp={import('./setting/setting')} name='setting'/>}/>
                             <Route path='/login' render={() => <WrapperComponent Comp={import('./login/login')} name='login'/>}/>
+                            <Route path='/app' render={() => <WrapperComponent Comp={import('./app/app')} name='app'/>}/>
+                            <Route path='/cafile' render={() => <WrapperComponent Comp={import('./cafile/cafile')} name='cafile'/>}/>
                             <Route render={() => <WrapperComponent Comp={import('./task/task')}/>}/>
                         </Switch>
                     </div>
@@ -58,6 +60,6 @@ class WrapperComponent extends React.Component{
 }
 let rootComponent = App;
 // if(module.hot){
-//     rootComponent = hot(module)(App);
+//     rootComponent = hot(module)(app);
 // }
 export default rootComponent;
