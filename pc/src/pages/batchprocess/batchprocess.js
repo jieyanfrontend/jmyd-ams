@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-// import './app.css';
+// import './batchprocess.css';
 import moment from 'moment';
+import { Route,Redirect } from 'react-router-dom';
 import { Card , Table , Select , Button , Form ,Input , Divider , Modal} from 'antd';
 const { Option } = Select;
 const { Search } = Input;
-class App extends Component {
+class Batchprocess extends Component {
     state = {
-        visible: false
+        visible: false,
+        create_task: false
     };
     showModal = () => {
         this.setState({
@@ -17,8 +19,8 @@ class App extends Component {
         console.log(e);
         this.setState({
             visible: false,
+            create_task:true
         });
-        location.pathname('./cafile')
     }
     handleCancel = (e) => {
         console.log(e);
@@ -77,6 +79,7 @@ class App extends Component {
         };
         return (
             <div>
+                {this.state.create_task ? <Redirect to='/cafile'/> : null}
                 <Form layout="inline">
                     <Form.Item label={'效率编号100'}>
                         <Select defaultValue="3115000416">
@@ -112,9 +115,9 @@ class App extends Component {
                     </Form.Item>
                 </Form>
                 <div>
-                    <Button type='primary' onClick={this.showModal}>创建任务</Button>
+                    <Button type='primary' onClick={this.showModal} size={'small'} style={{marginRight:10 ,marginBottom:10 ,marginTop:10}}>创建任务</Button>
                     <Modal
-                        title="Basic Modal"
+                        title="创建A类文件"
                         visible={this.state.visible}
                         onOk={this.handleOk}
                         onCancel={this.handleCancel}>
@@ -123,7 +126,7 @@ class App extends Component {
                                 <span>编号：{this.data[0].id}</span>
                             </div>
                             <div style={{marginBottom:5}}>
-                                <span>效率编号：</span><Input defaultValue={this.data[0].ef_id} style={{ width: 200 }}/>
+                                <span>效率编号100：</span><Input defaultValue={this.data[0].ef_id} style={{ width: 200 }}/>
                             </div>
                             <div style={{marginBottom:5}}>
                                 <span>标题：</span><Input defaultValue={this.data[0].title} style={{ width: 200 }}/>
@@ -141,7 +144,7 @@ class App extends Component {
                             </div>
                         </Card>
                     </Modal>
-                    <Button>导出</Button>
+                    <Button size={'small'} style={{margin:10 ,marginBottom:10 ,marginTop:10}}>导出</Button>
                 </div>
                 <Card>
                     <Table rowSelection={rowSelection} columns={this.columns} dataSource={this.data}></Table>
@@ -150,5 +153,5 @@ class App extends Component {
         );
     }
 }
-let AppForm = Form.create()(App);
-export default AppForm;
+let BatchprocessForm = Form.create()(Batchprocess);
+export default BatchprocessForm;

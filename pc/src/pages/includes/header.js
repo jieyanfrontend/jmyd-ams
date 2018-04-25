@@ -13,7 +13,10 @@ class Header extends Component{
                         className={style.menu}
                     >
                         <Menu.Item key='app'>
-                            <Link to='/app'>ams工单</Link>
+                            <Link to='#'>AMS工单提醒</Link>
+                        </Menu.Item>
+                        <Menu.Item key='batchprocess'>
+                            <Link to='/batchprocess'>批量处理业务</Link>
                         </Menu.Item>
                         <Menu.Item key='setting'>
                             <Link to='/setting'>设置</Link>
