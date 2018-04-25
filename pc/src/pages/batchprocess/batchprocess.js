@@ -120,7 +120,9 @@ class Batchprocess extends Component {
                         title="创建A类文件"
                         visible={this.state.visible}
                         onOk={this.handleOk}
-                        onCancel={this.handleCancel}>
+                        onCancel={this.handleCancel}
+                        okText={'保存'}
+                        cancelText={'返回'}>
                         <Card>
                             <div style={{marginBottom:5}}>
                                 <span>编号：{this.data[0].id}</span>
