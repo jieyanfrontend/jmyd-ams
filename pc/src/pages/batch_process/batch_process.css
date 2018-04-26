@@ -1,0 +1,15 @@
+.select {
+    width: 130px!important;
+}
+.fr{
+    float: right;
+}
+.action_bar{
+    padding: 15px 0;
+}
+.action_bar button{
+    margin-right: 15px;
+}
+.operate{
+    margin-right: 10px;
+}

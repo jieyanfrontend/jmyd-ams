@@ -22,3 +22,9 @@
 .footer{
     text-align: center;
 }
+:global(.init-height) {
+    min-height: 100%;
+    width: 100%;
+    background: #fff;
+    padding: 24px 32px;
+}
