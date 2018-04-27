@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu, Button } from 'antd';
+import { Menu } from 'antd';
 import { Link } from 'react-router-dom';
 import style from './header.css';
 import menu from './menu';

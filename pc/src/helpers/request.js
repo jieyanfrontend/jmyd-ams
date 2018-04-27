@@ -38,6 +38,7 @@ function request({ url, method = 'POST', postType = 'json' ,data = {}, success =
                 }
             }else{
                 alert('请求遇到了问题，请稍后再尝试');
+                fail();
             }
             complete();
         }

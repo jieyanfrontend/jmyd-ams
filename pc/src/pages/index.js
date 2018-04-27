@@ -3,7 +3,7 @@ import { hot } from 'react-hot-loader';
 import { Route, Switch } from 'react-router-dom';
 import { Layout } from 'antd';
 import IncludeHeader from './includes/header';
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 import style from './index.css';
 class App extends Component {
     render(){
@@ -16,12 +16,15 @@ class App extends Component {
                 <Content className={style.content}>
                     <div className={style.container}>
                         <Switch>
-                            <Route path='/task' render={() => <WrapperComponent globalStore={globalStore} Comp={import('./task/task')} name='task'/>}/>
-                            <Route path='/setting' render={() => <WrapperComponent globalStore={globalStore} Comp={import('./setting/setting')} name='setting'/>}/>
-                            <Route path='/detailpage' render={() => <WrapperComponent globalStore={globalStore} Comp={import('./detailpage/detailpage')} name='detailpage'/>}/>
-                            <Route path='/batch_process' render={() => <WrapperComponent globalStore={globalStore} Comp={import('./batch_process/batch_process')} name='batch_process'/>}/>
-                            <Route path='/login' render={() => <WrapperComponent globalStore={globalStore} Comp={import('./login/login')} name='login'/>}/>
-                            <Route render={() => <WrapperComponent globalStore={globalStore} Comp={import('./task/task')}/>}/>
+                          <Route path='/task' render={() => <WrapperComponent globalStore={globalStore} Comp={import('./task/task')} name='task'/>}/>
+                          <Route path='/setting' render={() => <WrapperComponent globalStore={globalStore} Comp={import('./setting/setting')} name='setting'/>}/>
+                          <Route path='/batch_process' render={() => <WrapperComponent globalStore={globalStore} Comp={import('./batch_process/batch_process')} name='batch_process'/>}/>
+                          <Route path='/process/:id' render={() => <WrapperComponent globalStore={globalStore} Comp={import('./process/process')} name='process'/>}/>
+                          <Route path='/login' render={() => <WrapperComponent globalStore={globalStore} Comp={import('./login/login')} name='login'/>}/>
+                          <Route path='/detailpage' render={() => <WrapperComponent globalStore={globalStore} Comp={import('./detailpage/detailpage')} name='detailpage'/>}/>
+                          <Route path='/batchprocess' render={() => <WrapperComponent Comp={import('./batchprocess/batchprocess')} name='batchprocess'/>}/>
+                          <Route path='/cafile' render={() => <WrapperComponent Comp={import('./cafile/cafile')} name='cafile'/>}/>
+                          <Route render={() => <WrapperComponent globalStore={globalStore} Comp={import('./task/task')}/>}/>
                         </Switch>
                     </div>
                 </Content>
@@ -30,9 +33,9 @@ class App extends Component {
     }
 }
 class WrapperComponent extends React.Component{
-  state = {
-    Comp: null
-  };
+    state = {
+      Comp: null
+    };
     componentDidMount(){
         this.updateComp(this.props);
     }
@@ -54,5 +57,4 @@ class WrapperComponent extends React.Component{
         });
     }
 }
-
 export default hot(module)(App);

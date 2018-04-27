@@ -28,3 +28,9 @@
     background: #fff;
     padding: 24px 32px;
 }
+:global(.fr){
+    float: right;
+}
+:global(.mr15){
+    margin-right: 15px;
+}

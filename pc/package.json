@@ -30,6 +30,7 @@
     "babel-plugin-import": "^1.7.0",
     "babel-polyfill": "^6.26.0",
     "es6-promise": "^4.2.4",
+    "history": "^4.7.2",
     "mobx": "^4.2.0",
     "mobx-react": "^5.0.0",
     "moment": "^2.22.1",
