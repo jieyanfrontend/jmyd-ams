@@ -1,0 +1,19 @@
+.fr{
+	float: right;
+}
+.operate_btn{
+	margin-right: 16px;
+}
+.btn_group{
+    display: flex;
+}
+.search_form{
+    margin-bottom: 24px;
+}
+.card{
+	width: 100%;
+    margin-bottom: 20px;
+}
+.status_select{
+    width: 100px !important;
+}

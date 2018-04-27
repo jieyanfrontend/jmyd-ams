@@ -9,8 +9,8 @@ const Option = Select.Option;
 
 class Detailshow extends React.Component {
 
-   handleChange(value) {
-  console.log(`selected ${value}`);
+  handleChange(value) {
+    console.log(`selected ${value}`);
 }
   state = { visible: false }
   showModal = () => {
@@ -30,7 +30,13 @@ class Detailshow extends React.Component {
       visible: false,
     });
   }
+  state = {
+    name:'qweqewq',
+    obj:{}
+  }
   render() {
+    let name = this.state.name;
+    let obj = this.state.obj;
     return (
       <div>
         <Button type="primary" onClick={this.showModal}>创建B类文件</Button>
@@ -44,7 +50,7 @@ class Detailshow extends React.Component {
         >
         
           <Steps direction="vertical" current={0}>
-            <Step title="第一步" description={"效率100编号："+{}} status="process" />
+            <Step title="第一步" description={"效率100编号："+obj.ada} status="process" />
             <Step title="第二步" description={"操作类型:"+
 
              {}

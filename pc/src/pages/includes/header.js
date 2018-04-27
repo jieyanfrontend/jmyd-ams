@@ -12,8 +12,14 @@ class Header extends Component{
                         mode="horizontal"
                         className={style.menu}
                     >
+                        <Menu.Item key='task'>
+                            <Link to='/task'>AMS工单</Link>
+                        </Menu.Item>
+                        <Menu.Item key='batchprocesstask'>
+                            <Link to='/batchprocesstask'>批量处理业务</Link>
+                        </Menu.Item>
                         <Menu.Item key=''>
-                            <Link to='/detailpage'>直接进入详情页</Link>
+                            <Link to='/detail'>进入详情页</Link>
                         </Menu.Item>
                         <Menu.Item key='setting'>
                             <Link to='/setting'>设置</Link>

@@ -17,7 +17,8 @@ class App extends Component {
                         <Switch>
                             <Route path='/task' render={() => <WrapperComponent Comp={import('./task/task')} name='task'/>}/>
                             <Route path='/setting' render={() => <WrapperComponent Comp={import('./setting/setting')} name='setting'/>}/>
-                            <Route path='/detailpage' render={() => <WrapperComponent Comp={import('./detailpage/detailpage')} name='detailpage'/>}/>
+                            <Route path='/batchprocesstask' render={() => <WrapperComponent Comp={import('./batchprocesstask/batchprocesstask')} name='batchprocesstask'/>}/>
+                            <Route path='/detail' render={() => <WrapperComponent Comp={import('./detail/detail')} name='detail'/>}/>
                             <Route path='/login' render={() => <WrapperComponent Comp={import('./login/login')} name='login'/>}/>
                             <Route render={() => <WrapperComponent Comp={import('./task/task')}/>}/>
                         </Switch>
