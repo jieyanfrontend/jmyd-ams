@@ -6,6 +6,6 @@ export default [{
     task_type: '事务件',
     finish_time: moment().format('YYYY-MM-DD HH:ss'),
     current_status: '超时',
-    finish_status: '已完成',
+    finish_status: '未完成',
     follow_status: '跟踪中'
 }]

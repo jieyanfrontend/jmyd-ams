@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Menu, Button } from 'antd';
+import { Menu } from 'antd';
 import { Link } from 'react-router-dom';
 import style from './header.css';
+import menu from './menu';
 class Header extends Component{
     render(){
         return (
@@ -11,6 +12,7 @@ class Header extends Component{
                     <Menu
                         mode="horizontal"
                         className={style.menu}
+<<<<<<< HEAD
                     >
                         <Menu.Item key='task'>
                             <Link to='/task'>AMS工单</Link>
@@ -27,6 +29,14 @@ class Header extends Component{
                         <Menu.Item key='logout'>
                             <Link to='/login'>退出</Link>
                         </Menu.Item>
+=======
+                    >{
+                      menu.map(item => (
+                          <Menu.Item key={item.title}>
+                            <Link to={item.path}>{item.title}</Link>
+                          </Menu.Item>))
+                    }
+>>>>>>> master
                     </Menu>
                 </div>
             </div>
