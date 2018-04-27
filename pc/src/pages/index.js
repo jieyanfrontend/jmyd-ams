@@ -5,6 +5,7 @@ import { Layout } from 'antd';
 import IncludeHeader from './includes/header';
 const { Header, Content } = Layout;
 import style from './index.css';
+import mock from './mock';
 class App extends Component {
     render(){
         let { globalStore } = this.props;

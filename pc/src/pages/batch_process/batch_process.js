@@ -14,7 +14,7 @@ const Search = Input.Search;
 class BatchProcess extends React.Component{
   columns = [{
     title: '编号',
-    dataIndex: 'code'
+    dataIndex: 'id'
   }, {
     title: '效率100编号',
     dataIndex: 'wf_id'
@@ -38,19 +38,19 @@ class BatchProcess extends React.Component{
     )
   }];
   render(){
-    let { visible, list, selectedItem } = store;
-    let dataSource = [];
+    let { visible, list, selectedItem, fileAList } = store;
+    let dataSource = Array.from(fileAList);
     let { wf_ids, titles, creators } = list;
     let { getFieldDecorator } = this.props.form;
     let SelectBar = () => (
       <Form layout='inline'>
         <Form.Item label='效率100编号'>{
-          getFieldDecorator('efficient', {
+          getFieldDecorator('wf_id', {
             initialValue: '0'
           })(
             <Select className={style.select}>
-              <Option value='0'>全部</Option>{wf_ids.map(c => (
-              <Option key={c.title} value={c.title}>{c.title}</Option>
+              <Option value='0'>全部</Option>{wf_ids.map(id => (
+              <Option key={id} value={id}>{id}</Option>
             ))}</Select>
           )
         }</Form.Item>
@@ -60,17 +60,17 @@ class BatchProcess extends React.Component{
           })(
             <Select className={style.select}>
               <Option value='0'>全部</Option>{titles.map(t => (
-              <Option key={t.title}>{t.title}</Option>
+              <Option key={t} value={t}>{t}</Option>
             ))}</Select>
           )
         }</Form.Item>
         <Form.Item label='创建人'>{
-          getFieldDecorator('user', {
+          getFieldDecorator('creator', {
             initialValue: '0'
           })(
             <Select className={style.select}>
-              <Option value='0'>全部</Option>{creators.map(t => (
-              <Option key={t.title}>{t.title}</Option>
+              <Option value='0'>全部</Option>{creators.map(c => (
+              <Option key={c} value={c}>{c}</Option>
             ))}</Select>
           )
         }</Form.Item>
@@ -96,7 +96,7 @@ class BatchProcess extends React.Component{
     )
   }
   componentDidMount(){
-    //this.fetchFileAList();
+    this.fetchFileAList();
   }
   createA = () => {
     this.setCreateVisible(true);
@@ -108,6 +108,7 @@ class BatchProcess extends React.Component{
         keyword: ''
       },
       success: ({data}) => {
+        console.log(data);
         store.setFileAList(data);
       }
     })
@@ -124,7 +125,7 @@ class BatchProcess extends React.Component{
   };
   editItem = (item) => {
     store.setSelectedItem(Object.assign({}, item, {
-      type: 'edit'
+      editType: 'edit'
     }));
     store.setVisible({
       edit: true
