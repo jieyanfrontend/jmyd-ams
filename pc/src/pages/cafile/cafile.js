@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import './cafile.css';
 import { Card , Table , Select , Button , Form ,Input , Divider , Modal} from 'antd';
 import moment from "moment/moment";
+import { Link } from 'react-router-dom';
 // import App from "./batchprocess";
 const { Option } = Select;
 const { Search } = Input;
@@ -107,8 +108,9 @@ class Cafile extends Component{
             }),
         };
         return(
-            <Card bordered={false} >
-                <Card title={<Button size={'small'}>返回</Button>}>
+            <div>
+                <Card bordered={false} >
+                    <Card title={<Link to='/batchprocess'><Button size={'small'}>返回</Button></Link>}>
                     <div>
                         <Form layout={"inline"} style={{marginTop:-20}}>
                             <Form.Item label={"文件类型"}>
@@ -211,6 +213,7 @@ class Cafile extends Component{
                     <Table rowSelection={rowSelection} columns={this.columns} dataSource={this.data}></Table>
                 </Card>
             </Card>
+            </div>
         )
     }
 }

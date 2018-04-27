@@ -33,6 +33,7 @@
     "history": "^4.7.2",
     "mobx": "^4.2.0",
     "mobx-react": "^5.0.0",
+    "mockjs": "^1.0.1-beta3",
     "moment": "^2.22.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
