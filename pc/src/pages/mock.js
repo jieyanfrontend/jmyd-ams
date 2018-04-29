@@ -7,7 +7,12 @@ Mock.mock('/api/get_flow_list', function (option) {
             'id': '@guid',
             'wf_id': '@date("yyyyMMdd")',
             'title': "关于用户优惠套餐",
-            'creator': "张三",
+            'creator|1': [
+                '陈二',
+                '张三',
+                '李四',
+                '王五',
+            ],
             'create_time': '@now("yyyy-MM-dd HH:mm:ss.SS")'
         }]})
 })

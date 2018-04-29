@@ -132,5 +132,6 @@ class EditA extends Component{
     let { setVisible } = this.props;
     setVisible(false)
   }
+  
 }
 export default Form.create()(EditA);

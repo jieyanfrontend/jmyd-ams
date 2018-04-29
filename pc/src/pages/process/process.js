@@ -7,25 +7,27 @@ import history from '../../history';
 import CreateFileB from '../file_b/file_b';
 import CreateFileC from '../file_c/file_c';
 import CreateFileE from '../file_e/file_e';
+import request from '../../helpers/request';
+let file_type =['全部','A类文件','B类文件','C类文件','D类文件','E类文件'];
 class Process extends React.Component{
-  columns = [{
-    title: '序号',
-    dataIndex: 'order_number'
-  }, {
+  columns = [ {
     title: '文件类型',
-    dataIndex: 'type'
+    dataIndex: 'file_type',
+      render: (text) => {
+        return <span>{file_type[text]}</span>
+      }
   }, {
     title: '效率100编号',
-    dataIndex: 'efficiency'
+    dataIndex: 'wf_id'
   }, {
     title: '标题',
     dataIndex: 'title'
   }, {
     title: '文件名称',
-    dataIndex: 'name'
+    dataIndex: 'file_id'
   }, {
     title: '创建人',
-    dataIndex: 'user'
+    dataIndex: 'creator'
   }, {
     title: '创建时间',
     dataIndex: 'create_time'
@@ -34,16 +36,26 @@ class Process extends React.Component{
     dataIndex: 'remark'
   }, {
     title: '打开附件',
-    dataIndex: 'attachment'
+    dataIndex: 'file_name'
   }, {
     title: '操作',
-    dataIndex: 'operate'
+    render: (text,record) =>{
+        <span>
+         <a onClick={() => this.editItem(record)}>编辑</a>
+        <a onClick={() => this.deleteItem(record)}>删除</a>
+      </span>
+    }
   }];
   render(){
-    let { getFieldDecorator } = this.props.form;
-    let { process_list } = store;
-    let dataSource = process_list.slice();
-    let SelectBar = () => (
+    // let { getFieldDecorator } = this.props.form;
+    // let { process_list } = store;
+      let {list, filesList} = store;
+      // console.log(filesList);
+      let { wf_ids, titles, creators } = list;
+      let dataSource = Array.from(filesList);
+     // let dataSource = process_list.slice();
+      let { getFieldDecorator } = this.props.form;
+      let SelectBar = () => (
       <Form layout='inline' className={style.form}>
         <Form.Item label='文件类型'>
           {getFieldDecorator('type', {
@@ -82,6 +94,23 @@ class Process extends React.Component{
       </div>
     )
   }
+  componentDidMount(){
+      this.fetchFilesList();
+  }
+    fetchFilesList = () => {
+      request({
+          url:'/api/get_file_list',
+          data:{
+              id:'',
+              keyword:'',
+              file_type:'',
+          },
+          success: ({data}) => {
+              console.log(data);
+              store.setFilesList(data);
+          }
+      })
+    }
   goBack = (e) => {
     e.preventDefault();
     history.push('/batch_process');

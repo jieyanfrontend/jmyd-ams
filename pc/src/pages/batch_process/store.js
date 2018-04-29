@@ -13,7 +13,8 @@ class Store {
   setFileAList(list){
     this.fileAList = list;
   }
-  @computed get list(){
+  @computed
+  get list(){
     let allWf_ids = [],
       allTitles = [],
       allCreators = [];

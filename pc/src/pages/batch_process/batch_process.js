@@ -98,7 +98,7 @@ class BatchProcess extends React.Component{
   componentDidMount(){
     this.fetchFileAList();
   }
-  createA = () => {
+    createA = () => {
     this.setCreateVisible(true);
   };
   fetchFileAList = () => {
