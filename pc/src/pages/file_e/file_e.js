@@ -88,7 +88,7 @@ class CreateFileE extends Component{
   render(){
     let { visible } = this.props;
     return (
-      <Modal title='创建E类文件' visible={true} width={800}>
+      <Modal title='创建E类文件' visible={visible} width={800}>
         <Form>
           <Form.Item label='文件类型' {...formProps}>
             <Select defaultValue='D类文件'>

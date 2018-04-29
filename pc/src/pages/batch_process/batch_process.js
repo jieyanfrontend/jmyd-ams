@@ -87,7 +87,7 @@ class BatchProcess extends React.Component{
         <SelectBar />
         <div className={style.action_bar}>
           <Button type='primary' onClick={this.createA}>创建任务</Button>
-          <Button onClick={this.exportFileA}>导出</Button>
+          {/*<Button onClick={this.exportFileA}>导出</Button>*/}
         </div>
         <Table columns={this.columns} dataSource={dataSource} rowKey='id'/>
         <CreateA setVisible={this.setCreateVisible} visible={visible}/>
@@ -139,8 +139,8 @@ class BatchProcess extends React.Component{
       edit: true
     })
   };
-  goToDetail = (record) => {
-    history.push(`/process/${record.id}`)
+  goToDetail = (id) => {
+    history.push(`/process/${id}`)
   };
   exportFileA = () => {
     // let

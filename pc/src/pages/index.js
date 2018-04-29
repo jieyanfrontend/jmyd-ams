@@ -19,8 +19,8 @@ class App extends Component {
                         <Switch>
                           <Route path='/task' render={() => <WrapperComponent globalStore={globalStore} Comp={import('./task/task')} name='task'/>}/>
                           <Route path='/setting' render={() => <WrapperComponent globalStore={globalStore} Comp={import('./setting/setting')} name='setting'/>}/>
-                          <Route path='/batch_process' render={() => <WrapperComponent globalStore={globalStore} Comp={import('./batch_process/batch_process')} name='batch_process'/>}/>
-                          <Route path='/process/:id' render={() => <WrapperComponent globalStore={globalStore} Comp={import('./process/process')} name='process'/>}/>
+                          <Route path='/batch_process' render={({match}) => <WrapperComponent match={match} globalStore={globalStore} Comp={import('./batch_process/batch_process')} name='batch_process'/>}/>
+                          <Route path='/process/:id' render={({match}) => <WrapperComponent match={match} globalStore={globalStore} Comp={import('./process/process')} name='process'/>}/>
                           <Route path='/login' render={() => <WrapperComponent globalStore={globalStore} Comp={import('./login/login')} name='login'/>}/>
                           <Route path='/detailpage' render={() => <WrapperComponent globalStore={globalStore} Comp={import('./detailpage/detailpage')} name='detailpage'/>}/>
                           <Route path='/batchprocess' render={() => <WrapperComponent Comp={import('./batchprocess/batchprocess')} name='batchprocess'/>}/>
@@ -41,9 +41,9 @@ class WrapperComponent extends React.Component{
         this.updateComp(this.props);
     }
     render(){
-        let Comp = this.state.Comp;
-      let { globalStore } = this.props;
-        return Comp ? <Comp globalStore={globalStore}/> : Comp;
+      let Comp = this.state.Comp;
+      let { globalStore, match } = this.props;
+      return Comp ? <Comp match={match} globalStore={globalStore}/> : Comp;
     }
     componentWillReceiveProps(nextProps){
         if(nextProps.Comp !== this.props.Comp){
