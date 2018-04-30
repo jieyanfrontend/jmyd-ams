@@ -9,7 +9,7 @@ class EditB extends Component{
         let { selectedItem, visible, form } = this.props;
         let { isFieldTouched, getFieldError,getFieldsError, getFieldDecorator } = form;
         let editVisible = visible.edit;
-        let { editType, wf_id, title, creator, create_time, file_type, remark, file_id } = selectedItem;
+        let { editType, wf_id, title, creator, create_time, file_type, remark, file_id, file_name } = selectedItem;
         let modalTitle = editType === 'edit' ? '编辑' : '删除';
         // let titleError = isFieldTouched('title') && getFieldError('title');
         // let wf_idError = isFieldTouched('wf_id') && getFieldError('wf_id');
@@ -25,13 +25,13 @@ class EditB extends Component{
         return(
             <Modal visible={editVisible} title={`${modalTitle}----二级明细`} onCancel={this.closeModal} footer={<ModalFooter/>} {...CommonModalConfig}>
                 <Form>
-                    <Form.item label='文件类型' {...CommonFormConfig}>{file_type}</Form.item>
-                    <Form.item label='效率100编号' {...CommonFormConfig}>{wf_id}</Form.item>
-                    <Form.item label='标题'{...CommonFormConfig}>{title}</Form.item>
-                    <Form.item label='文件名称'{...CommonFormConfig}>{file_id}</Form.item>
-                    <Form.item label='创建人'{...CommonFormConfig}>{creator}</Form.item>
-                    <Form.item label='创建时间'{...CommonFormConfig}>{create_time}</Form.item>
-                    <Form.item
+                    <Form.Item label='文件类型' {...CommonFormConfig}>{file_type}</Form.Item>
+                    <Form.Item label='效率100编号' {...CommonFormConfig}>{wf_id}</Form.Item>
+                    <Form.Item label='标题'{...CommonFormConfig}>{title}</Form.Item>
+                    <Form.Item label='文件名称'{...CommonFormConfig}>{file_id}</Form.Item>
+                    <Form.Item label='创建人'{...CommonFormConfig}>{creator}</Form.Item>
+                    <Form.Item label='创建时间'{...CommonFormConfig}>{create_time}</Form.Item>
+                    <Form.Item
                         label='备注'
                         help={remarkError ? remarkError : ''}
                         validateStatus={remarkError ? 'error': ''}
@@ -40,14 +40,11 @@ class EditB extends Component{
                             initialValue: remark,
                         })(
                             <Input/>
-                        )}
-                    </Form.item>
-                    <Form.item label=''{...CommonFormConfig}>
-                        <Button><Icon type="upload" />打开附件</Button>
-                         xx文件.txt
-                    </Form.item>
+                        )}<Button><Icon type="upload" />打开附件</Button>
+                        {file_name}
+                    </Form.Item>
                     {editType === 'edit' ? null :(
-                        <Form.item
+                        <Form.Item
                         style={{display: editType === 'edit' ? 'none' : 'block'}}
                         help={reasonError ? reasonError : ''}
                         validateStatus={reasonError ? 'reason': ''}
@@ -59,7 +56,7 @@ class EditB extends Component{
                                 }]
                             })(<Input placeholder='必填'/>)
                             }
-                        </Form.item>
+                        </Form.Item>
                     )
                     }
                 </Form>
