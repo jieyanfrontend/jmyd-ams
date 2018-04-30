@@ -37,7 +37,12 @@ Mock.mock('/api/get_file_list', function(option){
             'wf_id': '@date("yyyyMMdd")',
             'file_id': 'A@date("yyyyMMdd")001',
             'title': "关于用户优惠套餐",
-            'creator': "张三",
+            'creator|1': [
+                '陈二',
+                '张三',
+                '李四',
+                '王五',
+            ],
             'create_time': '@now("yyyy-MM-dd HH:mm:ss.SS")',
             'file_type|0-5': 1,
             'remark': "",

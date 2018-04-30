@@ -1,14 +1,17 @@
 import React from 'react';
-import { Breadcrumb, Form, Select, Button, Table } from 'antd';
+import { Breadcrumb, Form, Select, Button, Table, Divider } from 'antd';
+import { observer } from 'mobx-react';
 import store from './store';
 import style from './process.css';
 const Option = Select.Option;
 import history from '../../history';
+import EditB from '../edit_b/edit_b';
 import CreateFileB from '../file_b/file_b';
 import CreateFileC from '../file_c/file_c';
 import CreateFileE from '../file_e/file_e';
 import request from '../../helpers/request';
 let file_type =['全部','A类文件','B类文件','C类文件','D类文件','E类文件'];
+@observer
 class Process extends React.Component{
   columns = [ {
     title: '文件类型',
@@ -39,21 +42,17 @@ class Process extends React.Component{
     dataIndex: 'file_name'
   }, {
     title: '操作',
-    render: (text,record) =>{
-        <span>
+    render: (text,record) =>(<span>
          <a onClick={() => this.editItem(record)}>编辑</a>
+        <Divider type='vertical'/>
         <a onClick={() => this.deleteItem(record)}>删除</a>
-      </span>
-    }
+      </span>)
   }];
   render(){
-    // let { getFieldDecorator } = this.props.form;
-    // let { process_list } = store;
-      let {list, filesList} = store;
-      // console.log(filesList);
+      let {visible, list, process_list, selectedItem} = store;
       let { wf_ids, titles, creators } = list;
-      let dataSource = Array.from(filesList);
-     // let dataSource = process_list.slice();
+      // let dataSource = Array.from(process_list);
+     let dataSource = process_list.slice();
       let { getFieldDecorator } = this.props.form;
       let SelectBar = () => (
       <Form layout='inline' className={style.form}>
@@ -88,16 +87,17 @@ class Process extends React.Component{
         </a>
         <SelectBar />
         <Table dataSource={dataSource} columns={this.columns}/>
-        <CreateFileB />
+          <EditB setVisible={this.setEditVisible} visible={visible} selectedItem={selectedItem}/>
+          <CreateFileB />
         <CreateFileC />
         <CreateFileE />
       </div>
     )
   }
   componentDidMount(){
-      this.fetchFilesList();
+      this.fetchProcessList();
   }
-    fetchFilesList = () => {
+    fetchProcessList = () => {
       request({
           url:'/api/get_file_list',
           data:{
@@ -107,7 +107,7 @@ class Process extends React.Component{
           },
           success: ({data}) => {
               console.log(data);
-              store.setFilesList(data);
+              store.setProcessList(data);
           }
       })
     }
@@ -115,5 +115,26 @@ class Process extends React.Component{
     e.preventDefault();
     history.push('/batch_process');
   }
+    setEditVisible = (bool) => {
+        store.setVisible({
+            edit: bool
+        });
+    };
+  editItem = (item) => {
+      store.setSelectedItem(Object.assign({}, item, {
+          editType: 'edit'
+      }));
+      store.setVisible({
+          edit: true
+      })
+  };
+    deleteItem = (item) => {
+        store.setSelectedItem(Object.assign({}, item, {
+            editType: 'delete'
+        }));
+        store.setVisible({
+            edit: true
+        })
+    };
 }
 export default Form.create()(Process);

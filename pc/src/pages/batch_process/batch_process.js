@@ -139,8 +139,8 @@ class BatchProcess extends React.Component{
       edit: true
     })
   };
-  goToDetail = (record) => {
-    history.push(`/process/${record.id}`)
+  goToDetail = (id) => {
+    history.push(`/process/${id}`)
   };
   exportFileA = () => {
     // let
