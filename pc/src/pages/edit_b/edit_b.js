@@ -11,11 +11,11 @@ class EditB extends Component{
         let editVisible = visible.edit;
         let { editType, wf_id, title, creator, create_time, file_type, remark, file_id } = selectedItem;
         let modalTitle = editType === 'edit' ? '编辑' : '删除';
-        let titleError = isFieldTouched('title') && getFieldError('title');
-        let wf_idError = isFieldTouched('wf_id') && getFieldError('wf_id');
+        // let titleError = isFieldTouched('title') && getFieldError('title');
+        // let wf_idError = isFieldTouched('wf_id') && getFieldError('wf_id');
         let remarkError = isFieldTouched('remark')&& getFieldError('remark');
         let reasonError = isFieldTouched('reason') && getFieldError('reason');
-        let isDisabledBtn = editType === 'edit' ? hasErrors(getFieldsError(['title', 'wf_id'])) : hasErrors(getFieldsError(['reason']));
+        let isDisabledBtn = editType === 'edit' ? null : hasErrors(getFieldsError(['reason']));
         let ModalFooter = () => (
             <React.Fragment>
                 <Button onClick={this.closeModal}>取消</Button>
