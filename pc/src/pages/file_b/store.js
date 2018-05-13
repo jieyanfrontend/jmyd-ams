@@ -5,6 +5,12 @@ class Store {
   changeType(type){
     this.type = type;
   }
+ @observable wf_id = {
 
+ }
+ @action
+  setWf_id(wf_if){
+    this.wf_id = wf_if;
+ }
 }
 export default new Store();

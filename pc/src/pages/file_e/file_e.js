@@ -86,9 +86,16 @@ let tableProps = {
 }
 class CreateFileE extends Component{
   render(){
-    let { visible } = this.props;
+    let { visible, setVisible } = this.props;
+    let fileEVisible = visible.file_e;
+      let ModalFooter = () => (
+          <React.Fragment>
+              <Button onClick={() => setVisible(false)}>取消</Button>
+              <Button type='primary' onClick={() => setVisible(false)}>确认</Button>
+          </React.Fragment>
+      );
     return (
-      <Modal title='创建E类文件' visible={visible} width={800}>
+      <Modal title='创建E类文件' visible={fileEVisible} footer={<ModalFooter/>} width={800}>
         <Form>
           <Form.Item label='文件类型' {...formProps}>
             <Select defaultValue='D类文件'>

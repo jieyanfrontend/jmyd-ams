@@ -2,6 +2,9 @@ import { observable, action, computed } from 'mobx';
 class Store {
     @observable visible = {
         edit: false,
+        file_b: false,
+        file_c:false,
+        file_e:false,
     }
     @action
     setVisible(type){
@@ -14,18 +17,14 @@ class Store {
   }
   @computed
   get list(){
-      let allWf_ids = [],
-          allTitles = [],
-          allCreators = [];
+      let allFileTypes = [];
       this.process_list.map(file => {
-        allWf_ids.push(file.wf_id);
-        allTitles.push(file.title);
-        allCreators.push(file.creator);
+          allFileTypes.push(file.file_type);
+          // allFileIds.push(file.file_id);
       });
       return {
-        wf_id: Array.from(new Set(allWf_ids)),
-        title: Array.from(new Set(allTitles)),
-        creator: Array.from(new Set(allCreators)),
+        file_types: Array.from(new Set(allFileTypes)),
+          // file_ids: Array.from(new Set(fileIds))
       }
   }
   @observable selectedItem = {

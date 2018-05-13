@@ -22,14 +22,22 @@ class CreateFileC extends Component{
     render: () => <Checkbox />
   }];
   render(){
-    let Footer = () => (
+      // console.log(this.props);
+      let { visible, setVisible } = this.props;
+      let fileCVisible = visible.file_c;
+      let Footer = () => (
       <footer style={{textAlign: 'right'}}>
         <Button type='primary'>执行比对</Button>
       </footer>
     );
-    let { visible } = this.props;
+      let ModalFooter = () => (
+          <React.Fragment>
+              <Button onClick={() => setVisible(false)}>取消</Button>
+              <Button type='primary' onClick={() => setVisible(false)}>确认</Button>
+          </React.Fragment>
+      );
     return (
-      <Modal visible={visible} title='创建C类文件' width={800}>
+      <Modal visible={fileCVisible} title='创建C类文件' width={800} footer={<ModalFooter/>} onCancel={setVisible(false)}>
         <Table title={() => <span>hello world</span>} dataSource={[]} columns={this.columns}  size='small' bordered={false} footer={Footer}/>
         <List size='small'
               header={<div>比对结果</div>}
@@ -39,6 +47,9 @@ class CreateFileC extends Component{
               renderItem={item => <List.Item>{item}</List.Item>}/>
       </Modal>
     )
+  }
+  createC = () => {
+
   }
 }
 export default CreateFileC;

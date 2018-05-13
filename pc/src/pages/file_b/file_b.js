@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Modal, Form, Input, Select, Table, Radio } from 'antd';
+import { Modal, Form, Input, Select, Table, Radio, Button } from 'antd';
 import { observer } from 'mobx-react';
 import store from './store';
+import hasErrors from "../../helpers/has-errors";
+import request from "../../helpers/request";
 let { TextArea } = Input;
 let Option = Select.Option;
 let RadioGroup = Radio.Group;
@@ -17,6 +19,7 @@ let formProps = {
 };
 let allTypes = {
   '批开停开机': {
+    opertaion_type :1,
     dataSource: [{
       order: '1',
       field: '号码',
@@ -43,7 +46,8 @@ let allTypes = {
     }
   },
   '批量实名登记': {
-    dataSource: [{
+      opertaion_type :2,
+      dataSource: [{
       order: '1',
       field: '号码',
       input_format: '号码',
@@ -89,7 +93,8 @@ let allTypes = {
     }
   },
   '批量订单回退': {
-    dataSource: [{
+      opertaion_type :3,
+      dataSource: [{
       order: 1,
       field: '订单编号',
       input_format: '订单编号',
@@ -127,7 +132,8 @@ let allTypes = {
     }
   },
   '批量产品订购退订与变更': {
-    dataSource: [{
+      opertaion_type :4,
+      dataSource: [{
       order: 1,
       field: '手机号码',
       input_format: '手机号码',
@@ -165,7 +171,8 @@ let allTypes = {
     }
   },
   '批量密码重置': {
-    dataSource: [{
+      opertaion_type :5,
+      dataSource: [{
       order: 1,
       field: '手机号码',
       input_format: '手机号码',
@@ -196,7 +203,8 @@ let allTypes = {
     }
   },
   "批量产品订购退订": {
-    dataSource: [{
+      opertaion_type :6,
+      dataSource: [{
       order: 1,
       field: '手机号码',
       input_format: '手机号码',
@@ -267,7 +275,8 @@ let allTypes = {
     }
   },
   "批量多层产品订购退订": {
-    dataSource: [{
+      opertaion_type :7,
+      dataSource: [{
       order: 1,
       field: '手机号码',
       input_format: '手机号码',
@@ -348,14 +357,31 @@ let allTypes = {
 @observer
 class CreateFileB extends Component{
   render(){
-    let { visible } = this.props;
+    let { visible, setVisible, wf_id ,form} = this.props;
+    // console.log(form);
+    let fileBVisible = visible.file_b;
     let type = store.type;
     let { dataSource,  columns, example = {} } = allTypes[type];
+      let ModalFooter = () => (
+          <React.Fragment>
+              <Button onClick={() => setVisible(false)}>取消</Button>
+              <Button type='primary' onClick={() => this.createB()}>确认</Button>
+          </React.Fragment>
+      );
     return (
-      <Modal visible={visible} title='创建B类文件' width={800}>
+      <Modal visible={fileBVisible} title='创建B类文件' footer={<ModalFooter/>} onCancel={() => setVisible(false)} width={800}>
         <Form>
           <Form.Item label='效率100编号' {...formProps}>
-            <Input disabled={true}/>
+              {/*{*/}
+            {/*getFieldDecorator('wf_id',{*/}
+              {/*initialValue: wf_id,*/}
+                {/*rules: [{*/}
+                {/*required: true,*/}
+                    {/*message: '请输入效率100编号'*/}
+                {/*}]*/}
+            {/*})(<Input/>)*/}
+          {/*}*/}
+            <Input disabled={true} defaultValue={wf_id}/>
           </Form.Item>
           <Form.Item label='操作类型' {...formProps}>
             <Select
@@ -381,5 +407,43 @@ class CreateFileB extends Component{
   changeSelectType = value => {
     store.changeType(value);
   }
+    createB = () => {
+        let { getFieldsValue, getFieldsError } =this.props.form;
+        let canCreate = !hasErrors(getFieldsError());
+        if(canCreate){
+            let values = getFieldsValue();
+            let type = store.type;
+            let operation_type = allTypes[type].opertaion_type;
+            let id = this.props.id;
+            console.log(typeof (operation_type));
+            request({
+                url: '/api/create_file_b',
+                data: {
+                    operation_type,
+                    id,
+                    word1: '',
+                    word2: '',
+                    word3: '',
+                    word4: '',
+                    word5: '',
+                    word6: '',
+                    word7: '',
+                    word8: '',
+                    word9: '',
+                },
+                // postType: 'formdata',
+                success: (res) => {
+                  console.log(res);
+                  console.log(operation_type);
+                  //   console.log(this.props);
+                    this.props.setVisible(false);
+                },
+                fail: (data) => {
+                    // console.log(data);
+                    //this.props.store.setCreateVisible(false);
+                }
+            })
+        }
+    };
 }
-export default CreateFileB;
+export default Form.create()(CreateFileB);
