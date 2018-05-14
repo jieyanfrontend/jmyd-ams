@@ -15,6 +15,7 @@ class EditA extends Component{
     let titleError = isFieldTouched('title') && getFieldError('title');
     let wf_idError = isFieldTouched('wf_id') && getFieldError('wf_id');
     let reasonError = isFieldTouched('reason') && getFieldError('reason');
+      console.log(getFieldsError(['title', 'wf_id']));
     let isDisabledBtn = editType === 'edit' ? hasErrors(getFieldsError(['title', 'wf_id'])) : hasErrors(getFieldsError(['reason']));
     let ModalFooter = () => (
       <React.Fragment>
@@ -65,7 +66,7 @@ class EditA extends Component{
             label='删除原因' { ...CommonFormConfig}>
             {getFieldDecorator('reason', {
               rules: [{
-                required: true,
+                required: editType !== 'edit',
                 message: '请输入删除原因'
               }]
             })(

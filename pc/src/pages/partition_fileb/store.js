@@ -1,6 +1,6 @@
 import { observable, action} from 'mobx';
 class Store{
-@observable partitionData={};
+@observable partitionData=[];
 @action
     setDataPartition(value){
     this.partitionData = value

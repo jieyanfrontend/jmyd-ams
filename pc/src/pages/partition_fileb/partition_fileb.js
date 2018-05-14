@@ -7,6 +7,11 @@ import { observer } from 'mobx-react';
 // const RadioGroup = Radio.Group;
 @observer
 class partitionFileB extends Component {
+    constructor(props){
+        super(props);
+        this.fetchPartition(props);
+        store.setDataPartition(props.dataSource);
+    }
   columns = [
     {
       title: '编号',
@@ -46,11 +51,13 @@ class partitionFileB extends Component {
     },
   ];
   render() {
-    let { visible, setVisible, form, dataSource } = this.props;
+    let { visible, setVisible, form,} = this.props;
     let { isFieldTouched, getFieldError, getFieldDecorator } = form;
     let partition = visible.partition;
-    dataSource = dataSource.filter(item => item.file_type == 2);
-    store.setDataPartition(dataSource);
+    // dataSource = dataSource.filter(item => item.file_type == 2);
+    // store.setDataPartition(dataSource);
+      let { partitionData } = store;
+      let dataSource = partitionData;
     let ModalFooter = () => (
       <React.Fragment>
         <Button onClick={() => setVisible(false)}>取消</Button>
@@ -104,15 +111,15 @@ class partitionFileB extends Component {
       </Modal>
     );
   }
-  componentDidMount() {
-    this.fetchPartition();
-  }
-  componentWillReceiveProps() {
-    this.fetchPartition();
+  // componentDidMount() {
+  //   this.fetchPartition(this.props);
+  // }
+  componentWillReceiveProps(nextProps) {
+    this.fetchPartition(nextProps);
   }
 
-  fetchPartition() {
-    let { dataSource } = this.props;
+  fetchPartition(props) {
+    let { dataSource } = props;
     dataSource = dataSource.filter(item => item.file_type == 2);
     store.setDataPartition(dataSource);
     // console.log(store.partitionData);
