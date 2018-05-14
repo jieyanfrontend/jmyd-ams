@@ -10,7 +10,7 @@ class partitionFileB extends Component {
     constructor(props){
         super(props);
         this.fetchPartition(props);
-        store.setDataPartition(props.dataSource);
+        // store.setDataPartition(props.dataSource);
     }
   columns = [
     {
