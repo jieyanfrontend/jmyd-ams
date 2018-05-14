@@ -9,6 +9,7 @@ import EditB from '../edit_b/edit_b';
 import CreateFileB from '../file_b/file_b';
 import CreateFileC from '../file_c/file_c';
 import CreateFileE from '../file_e/file_e';
+import PartitionFileB from '../partition_fileb/partition_fileb'
 import request from '../../helpers/request';
 import exportFile from '../../helpers/export-file';
 let file_type =['全部','A类文件','B类文件','C类文件','D类文件','E类文件'];
@@ -86,9 +87,9 @@ class Process extends React.Component{
                     <Button type='primary' onClick={() => this.fileEItem()}>创建E类文件</Button>
                 </Form.Item>
                 <Form.Item className='fr'>
-                    <Button className='mr15'>分割</Button>
-                    <Button className='mr15'>导入</Button>
-                    <Button>导出</Button>
+                    {/*<Button className='mr15'>分出</Button>*/}
+                    {/*<Button className='mr15'>导入</Button>*/}
+                    <Button onClick={() => this.patitionFileB()}>分割</Button>
                 </Form.Item>
             </Form>
         );
@@ -99,10 +100,11 @@ class Process extends React.Component{
                 </a>
                 <SelectBar />
                 <Table dataSource={dataSource} columns={this.columns} rowKey='file_name'/>
-                <EditB setVisible={this.setEditVisible} visible={visible} selectedItem={selectedItem}/>
+                <EditB setVisible={this.setEditVisible} visible={visible} selectedItem={selectedItem} id={this.props.match.params.id}/>
+                <PartitionFileB setVisible={this.setPartitionVisible} visible={visible} dataSource={dataSource} wf_id={this.props.match.params.wf_id}/>
                 <CreateFileB setVisible={this.setFileBVisible} visible={visible} wf_id={this.props.match.params.wf_id} id={this.props.match.params.id}/>
-                <CreateFileC setVisible={this.setFileCVisible} visible={visible}/>
-                <CreateFileE setVisible={this.setFileEVisible} visible={visible}/>
+                <CreateFileC setVisible={this.setFileCVisible} visible={visible} dataSource={dataSource} wf_id={this.props.match.params.wf_id} id={this.props.match.params.id}/>
+                <CreateFileE setVisible={this.setFileEVisible} visible={visible} id={this.props.match.params.id}/>
             </div>
         )
     }
@@ -119,7 +121,7 @@ class Process extends React.Component{
                 file_type:'',
             },
             success: ({table}) => {
-                console.log(table);
+                // console.log(table);
                 store.setProcessList(table);
             }
         })
@@ -133,6 +135,11 @@ class Process extends React.Component{
             edit: bool
         });
     };
+    setPartitionVisible = (bool) =>{
+        store.setVisible({
+            partition: bool
+        })
+    };
     setFileBVisible = (bool) =>{
         store.setVisible({
             file_b: bool
@@ -142,12 +149,17 @@ class Process extends React.Component{
         store.setVisible({
             file_c: bool
         })
-    };;
+    };
     setFileEVisible = (bool) =>{
         store.setVisible({
             file_e: bool
         })
     };
+    patitionFileB = () =>{
+        store.setVisible({
+            partition:true
+        })
+    }
     fileBItem = () => {
         store.setVisible({
             file_b: true

@@ -11,9 +11,9 @@ class CreateA extends Component {
         fileList: []
     };
     uploadProps = {
-        onChange: ({file}) => {
+        onChange: ({fileList}) => {
             this.setState({
-                fileList: [file]
+                fileList
             })
         },
         beforeUpload: () => false,
@@ -31,6 +31,7 @@ class CreateA extends Component {
 
     render() {
         let {form, setVisible, visible} = this.props;
+        // console.log(this.props)
         // console.log(form);
         let {fileList} = this.state;
         let createVisible = visible.create;
@@ -95,23 +96,23 @@ class CreateA extends Component {
             </Modal>
         )
     }
-
-    componentDidMount() {
-        this.props.form.validateFields();
-    }
+    //
+    // componentDidMount() {
+    //     this.props.form.validateFields();
+    // }
 
     createA = () => {
         let {getFieldsValue, getFieldsError} = this.props.form;
-        console.log(this.fileList);
+        console.log(this.state.fileList);
         let canCreate = !hasErrors(getFieldsError());
         if (canCreate) {
             let values = getFieldsValue();
-            let {file, ...others} = values
-            console.log(values);
+            // let {...other,file } = values
+            // console.log(values);
             request({
                 url: '/api/create_flow',
-                data: {...others,
-                    file: file},
+                data: {...values,
+                    file: values.file.file},
                 postType: 'formdata',
                 success: (data) => {
                     this.props.setVisible(false);

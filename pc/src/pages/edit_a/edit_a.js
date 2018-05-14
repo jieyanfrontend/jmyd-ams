@@ -4,6 +4,7 @@ import CommonModalConfig from '../../config/common-modal';
 import CommonFormConfig from '../../config/common-form';
 import request from '../../helpers/request';
 import hasErrors from '../../helpers/has-errors';
+import store from "../batch_process/store";
 class EditA extends Component{
   render(){
     let { selectedItem, visible, form } = this.props;
@@ -36,7 +37,7 @@ class EditA extends Component{
                 message: '请输入效率100编号'
               }]
             })(
-              <Input/>
+              <Input disabled={true}/>
             )}
           </Form.Item>
           <Form.Item
@@ -85,24 +86,23 @@ class EditA extends Component{
     let canPost = !hasErrors(getFieldsError());
     if(canPost){
       if(selectItem.editType === 'edit'){
-        this._edit();
+        this._edita();
       }else{
         this._delete();
       }
     }
   };
-  _edit = () => {
+  _edita = () => {
     let { form } = this.props;
-    let { wf_id, title } = form.getFieldsValue();
+    let { title } = form.getFieldsValue();
     let id = this.props.selectedItem.id;
-    request({
+      request({
       url: '/api/alert_flow',
       data: {
         id,
-        wf_id,
         title
       },
-      success: (data) => {
+      success: res => {
         this.closeModal();
       },
       fail: () => {
@@ -122,6 +122,7 @@ class EditA extends Component{
       },
       success: () => {
         this.closeModal();
+          this.fetchFileAList();
       },
       fail: () => {
         // this.closeModal();
@@ -132,6 +133,17 @@ class EditA extends Component{
     let { setVisible } = this.props;
     setVisible(false)
   }
-  
+    fetchFileAList = () => {
+        request({
+            url: '/api/get_flow_list',
+            data: {
+                keyword: ''
+            },
+            success: ({table}) => {
+                console.log(table);
+                store.setFileAList(table);
+            }
+        })
+    };
 }
 export default Form.create()(EditA);

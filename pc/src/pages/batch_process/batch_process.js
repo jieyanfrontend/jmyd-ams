@@ -110,7 +110,7 @@ class BatchProcess extends React.Component{
                 keyword: ''
             },
             success: ({table}) => {
-                // console.log(table);
+                console.log(table);
                 store.setFileAList(table);
             }
         })

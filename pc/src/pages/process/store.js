@@ -5,6 +5,7 @@ class Store {
         file_b: false,
         file_c:false,
         file_e:false,
+        partition:false
     }
     @action
     setVisible(type){

@@ -4,6 +4,9 @@ import CommonModalConfig from '../../config/common-modal';
 import CommonFormConfig from '../../config/common-form';
 import request from '../../helpers/request';
 import hasErrors from '../../helpers/has-errors';
+import store from '../process/store';
+import exportFile from "../../helpers/export-file";
+import style from './edit_b.css'
 class EditB extends Component {
   render() {
     let { selectedItem, visible, form } = this.props;
@@ -24,8 +27,8 @@ class EditB extends Component {
         </Button>
       </React.Fragment>
     );
-      let file_type_list =['全部','A类文件','B类文件','C类文件','D类文件','E类文件'];
-      return (
+    let file_type_list = ['全部', 'A类文件', 'B类文件', 'C类文件', 'D类文件', 'E类文件'];
+    return (
       <Modal
         visible={editVisible}
         title={`${modalTitle}----二级明细`}
@@ -63,10 +66,8 @@ class EditB extends Component {
               : getFieldDecorator('remark', {
                   initialValue: remark,
                 })(<Input />)}
-            <Button>
-              <Icon type="upload" />打开附件
-            </Button>
-            {file_name}
+                <span className={style.pl25}><a onClick={this.exportFileA}>{file_name}</a></span>
+
           </Form.Item>
           {editType === 'edit' ? null : (
             <Form.Item
@@ -78,10 +79,10 @@ class EditB extends Component {
             >
               {getFieldDecorator('reason', {
                 rules: [
-                  {
-                    require: true,
-                    message: '请输入删除原因',
-                  },
+              {
+                  require: true,
+                  message: '请输入删除原因',
+              },
                 ],
               })(<Input placeholder="必填" />)}
             </Form.Item>
@@ -107,33 +108,41 @@ class EditB extends Component {
   };
   _edit = () => {
     let { form } = this.props;
-    let { wf_id, title } = form.getFieldsValue();
-    let id = this.props.selectedItem.id;
+    let selectItem = this.props.selectedItem;
+    let { file_id } = selectItem;
+    let id = this.props.id;
+    let { remark } = form.getFieldsValue();
+    console.log(id);
     request({
-      url: '/api/alert_flow',
+      url: '/api/edit_file',
       data: {
-        id,
-        wf_id,
-        title,
+        flow_id: id,
+        file_id,
+        remark: remark,
       },
       success: () => {
         this.closeModal();
+        this.fetchProcessList();
       },
       fail: () => {},
     });
   };
   _delete = () => {
-    let { form } = this.props;
-    let { reason } = form.getFieldsValue();
-    let id = this.props.selectedItem.id;
+      let { form } = this.props;
+      let selectItem = this.props.selectedItem;
+      let { file_id } = selectItem;
+      let id = this.props.id;
+      let { reason } = form.getFieldsValue();
     request({
-      url: '/api/delete_flow',
+      url: '/api/delete_file',
       data: {
-        id,
-        reason,
+          flow_id: id,
+          file_id,
+         reason,
       },
       success: () => {
         this.closeModal();
+        this.fetchProcessList()
       },
       fail: () => {
         // this.closeModal();
@@ -144,5 +153,30 @@ class EditB extends Component {
     let { setVisible } = this.props;
     setVisible(false);
   };
+  fetchProcessList = () => {
+    request({
+      url: '/api/get_file_list',
+      data: {
+        id: this.props.id,
+        keyword: '',
+        file_type: '',
+      },
+      success: ({ table }) => {
+        store.setProcessList(table);
+      },
+    });
+  };
+    exportFileA = ()=>{
+        let selectItem = this.props.selectedItem;
+        let { file_id } = selectItem;
+        let{id} = this.props;
+        exportFile({
+            url: '/api/get_file',
+            data: {
+                id:id,
+                file_id,
+            }
+        })
+    }
 }
 export default Form.create()(EditB);

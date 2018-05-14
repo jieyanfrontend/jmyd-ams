@@ -34,3 +34,6 @@
 :global(.mr15){
     margin-right: 15px;
 }
+:global(.pl20){
+    padding-left:30px ;
+}
