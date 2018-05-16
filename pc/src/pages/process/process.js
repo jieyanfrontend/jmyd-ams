@@ -101,7 +101,7 @@ class Process extends React.Component{
                 <SelectBar />
                 <Table dataSource={dataSource} columns={this.columns} rowKey='file_name'/>
                 <EditB setVisible={this.setEditVisible} visible={visible} selectedItem={selectedItem} id={this.props.match.params.id}/>
-                <PartitionFileB setVisible={this.setPartitionVisible} visible={visible} dataSource={dataSource} wf_id={this.props.match.params.wf_id}/>
+                <PartitionFileB setVisible={this.setPartitionVisible} visible={visible} dataSource={dataSource} wf_id={this.props.match.params.wf_id} id={this.props.match.params.id}/>
                 <CreateFileB setVisible={this.setFileBVisible} visible={visible} wf_id={this.props.match.params.wf_id} id={this.props.match.params.id}/>
                 <CreateFileC setVisible={this.setFileCVisible} visible={visible} dataSource={dataSource} wf_id={this.props.match.params.wf_id} id={this.props.match.params.id}/>
                 <CreateFileE setVisible={this.setFileEVisible} visible={visible} id={this.props.match.params.id}/>

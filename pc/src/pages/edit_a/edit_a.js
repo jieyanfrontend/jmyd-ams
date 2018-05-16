@@ -9,13 +9,13 @@ class EditA extends Component{
   render(){
     let { selectedItem, visible, form } = this.props;
     let { isFieldTouched, getFieldError,getFieldsError, getFieldDecorator } = form;
+    console.log(getFieldsError());
     let editVisible = visible.edit;
     let { editType, id, wf_id, title, creator, create_time } = selectedItem;
     let modalTitle = editType === 'edit' ? '编辑' : '删除';
     let titleError = isFieldTouched('title') && getFieldError('title');
     let wf_idError = isFieldTouched('wf_id') && getFieldError('wf_id');
     let reasonError = isFieldTouched('reason') && getFieldError('reason');
-      console.log(getFieldsError(['title', 'wf_id']));
     let isDisabledBtn = editType === 'edit' ? hasErrors(getFieldsError(['title', 'wf_id'])) : hasErrors(getFieldsError(['reason']));
     let ModalFooter = () => (
       <React.Fragment>
@@ -28,18 +28,17 @@ class EditA extends Component{
         <Form>
           <Form.Item label='编号' { ...CommonFormConfig}>{id}</Form.Item>
           <Form.Item
-            help={wf_idError ? wf_idError : ''}
-            validateStatus={wf_idError ? 'error':''}
+            // validateStatus={wf_idError ? 'error':''}
             label='效率100编号' { ...CommonFormConfig}>
-            {editType !== 'edit' ? wf_id : getFieldDecorator('wf_id', {
-              initialValue: wf_id,
-              rules: [{
-                required: true,
-                message: '请输入效率100编号'
-              }]
-            })(
-              <Input disabled={true}/>
-            )}
+            {/*{editType !== 'edit' ? wf_id : getFieldDecorator('wf_id', {*/}
+              {/*initialValue: wf_id,*/}
+              {/*rules: [{*/}
+                {/*required: true,*/}
+                {/*message: '请输入效率100编号'*/}
+              {/*}]*/}
+            {/*})(*/}
+              {/*<Input disabled={true}/>*/}
+            {/*)}*/}{wf_id}
           </Form.Item>
           <Form.Item
             label='标题'
@@ -83,17 +82,23 @@ class EditA extends Component{
   }
   ensure = () => {
     let selectItem = this.props.selectedItem;
+    // console.log(selectItem);
     let { getFieldsError } = this.props.form;
-    let canPost = !hasErrors(getFieldsError());
+    // console.log(getFieldsError);
+    // console.log(getFieldsError());
+    let canPost = !hasErrors(getFieldsError);
+    // console.log(canPost);
     if(canPost){
       if(selectItem.editType === 'edit'){
-        this._edita();
+        this._edit();
+          // console.log(getFieldsError)
       }else{
         this._delete();
+        // console.log(getFieldsError)
       }
     }
   };
-  _edita = () => {
+  _edit = () => {
     let { form } = this.props;
     let { title } = form.getFieldsValue();
     let id = this.props.selectedItem.id;
@@ -105,6 +110,7 @@ class EditA extends Component{
       },
       success: res => {
         this.closeModal();
+          this.fetchFileAList();
       },
       fail: () => {
         // this.closeModal();
@@ -141,7 +147,7 @@ class EditA extends Component{
                 keyword: ''
             },
             success: ({table}) => {
-                console.log(table);
+                // console.log(table);
                 store.setFileAList(table);
             }
         })

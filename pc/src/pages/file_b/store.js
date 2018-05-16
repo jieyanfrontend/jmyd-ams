@@ -6,11 +6,15 @@ class Store {
     this.type = type;
   }
  @observable wf_id = {
-
  }
  @action
   setWf_id(wf_if){
     this.wf_id = wf_if;
  }
+ @observable inputValue='';
+  @action
+    setInputValue(value){
+        this.inputValue = value;
+    }
 }
 export default new Store();

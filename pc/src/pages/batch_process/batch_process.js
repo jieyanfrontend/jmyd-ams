@@ -54,32 +54,36 @@ class BatchProcess extends React.Component{
                         ))}</Select>
                     )
                 }</Form.Item>
-                <Form.Item label='标题'>{
-                    getFieldDecorator('title', {
-                        initialValue: '0'
-                    })(
-                        <Select className={style.select}>
-                            <Option value='0'>全部</Option>{titles.map(t => (
-                            <Option key={t} value={t}>{t}</Option>
-                        ))}</Select>
-                    )
-                }</Form.Item>
-                <Form.Item label='创建人'>{
-                    getFieldDecorator('creator', {
-                        initialValue: '0'
-                    })(
-                        <Select className={style.select}>
-                            <Option value='0'>全部</Option>{creators.map(c => (
-                            <Option key={c} value={c}>{c}</Option>
-                        ))}</Select>
-                    )
-                }</Form.Item>
                 <Form.Item>
-                    <Button type='primary'>查询</Button>
+                    <Button type='primary' onClick={this.handQuery}>查询</Button>
                 </Form.Item>
                 <Form.Item className={style.fr}>
-                    <Search placeholder='请输入其他关键字' enterButton/>
+                    {getFieldDecorator('keyword',{
+                        initialValue:''
+                    })(
+                        <Search placeholder='请输入关键字' enterButton/>
+                    )}
                 </Form.Item>
+                {/*<Form.Item label='标题'>{*/}
+                {/*getFieldDecorator('title', {*/}
+                {/*initialValue: '0'*/}
+                {/*})(*/}
+                {/*<Select className={style.select}>*/}
+                {/*<Option value='0'>全部</Option>{titles.map(t => (*/}
+                {/*<Option key={t} value={t}>{t}</Option>*/}
+                {/*))}</Select>*/}
+                {/*)*/}
+                {/*}</Form.Item>*/}
+                {/*<Form.Item label='创建人'>{*/}
+                {/*getFieldDecorator('creator', {*/}
+                {/*initialValue: '0'*/}
+                {/*})(*/}
+                {/*<Select className={style.select}>*/}
+                {/*<Option value='0'>全部</Option>{creators.map(c => (*/}
+                {/*<Option key={c} value={c}>{c}</Option>*/}
+                {/*))}</Select>*/}
+                {/*)*/}
+                {/*}</Form.Item>*/}
             </Form>
         );
         return(
@@ -87,11 +91,9 @@ class BatchProcess extends React.Component{
                 <SelectBar />
                 <div className={style.action_bar}>
                     <Button type='primary' onClick={this.createA}>创建任务</Button>
-                    {/*<Button onClick={this.exportFileA}>导出</Button>*/}
-                    <Button onClick={this.fetchFileAList}>test</Button>
                 </div>
                 <Table columns={this.columns} dataSource={dataSource} rowKey='id'/>
-                <CreateA setVisible={this.setCreateVisible} visible={visible}/>
+                <CreateA setVisible={this.setCreateVisible} visible={visible} selectedItem={selectedItem}/>
                 <EditA setVisible={this.setEditVisible} visible={visible} selectedItem={selectedItem}/>
             </div>
         )
@@ -110,11 +112,25 @@ class BatchProcess extends React.Component{
                 keyword: ''
             },
             success: ({table}) => {
-                console.log(table);
                 store.setFileAList(table);
             }
         })
     };
+    handQuery = ()=>{
+        let {form} = this.props;
+        let {getFieldsValue} = form;
+        let values = getFieldsValue();
+        let {keyword} = values;
+        request({
+            url: '/api/get_flow_list',
+            data: {
+                keyword: keyword,
+            },
+            success: ({table}) => {
+                store.setFileAList(table);
+            }
+        })
+    }
     setCreateVisible = (bool) => {
         store.setVisible({
             create: bool

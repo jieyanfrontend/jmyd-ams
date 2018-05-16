@@ -4,14 +4,16 @@ import { Modal, Table, Checkbox, Button, Form, Input, Radio } from 'antd';
 let file_type = ['全部', 'A类文件', 'B类文件', 'C类文件', 'D类文件', 'E类文件'];
 import store from './store';
 import { observer } from 'mobx-react';
+import request from '../../helpers/request';
+import store2 from "../process/store";
 // const RadioGroup = Radio.Group;
 @observer
 class partitionFileB extends Component {
-    constructor(props){
-        super(props);
-        this.fetchPartition(props);
-        // store.setDataPartition(props.dataSource);
-    }
+  constructor(props) {
+    super(props);
+    this.fetchPartition(props);
+    // store.setDataPartition(props.dataSource);
+  }
   columns = [
     {
       title: '编号',
@@ -45,23 +47,23 @@ class partitionFileB extends Component {
       title: '分割',
       dataIndex: '',
       render: (text, record) => {
-        console.log(record);
+        // console.log(record);
         return <Radio checked={record.checked} onChange={e => this.handleRadioChange(e, record)} />;
       },
     },
   ];
   render() {
-    let { visible, setVisible, form,} = this.props;
+    let { visible, setVisible, form } = this.props;
     let { isFieldTouched, getFieldError, getFieldDecorator } = form;
     let partition = visible.partition;
     // dataSource = dataSource.filter(item => item.file_type == 2);
     // store.setDataPartition(dataSource);
-      let { partitionData } = store;
-      let dataSource = partitionData;
+    let { partitionData } = store;
+    let dataSource = Array.from(partitionData);
     let ModalFooter = () => (
       <React.Fragment>
         <Button onClick={() => setVisible(false)}>取消</Button>
-        <Button type="primary" onClick={() => setVisible(false)}>
+        <Button type="primary" onClick={this.partitionFile}>
           确认
         </Button>
       </React.Fragment>
@@ -125,10 +127,14 @@ class partitionFileB extends Component {
     // console.log(store.partitionData);
   }
   handleRadioChange = (e, record) => {
-    console.log(record);
     let data = Array.from(store.partitionData);
     record.checked = !record.checked;
     let index;
+    if(record.checked) {
+      data.forEach(d => {
+          if(d.file_id !== record.file_id){
+        d.checked = false;}
+    })}
     data.forEach((d, i) => {
       if (record.file_id === d.file_id) {
         index = i;
@@ -136,6 +142,42 @@ class partitionFileB extends Component {
     });
     data.splice(index, 1, record);
     store.setDataPartition(data);
+    // console.log(e);
   };
+  partitionFile= () => {
+    let { id,form } = this.props;
+    let { partitionData} = store;
+    let file_id;
+    file_id = partitionData.filter(d => d.checked == true);
+    console.log(file_id);
+    let { partition_row } = form.getFieldsValue();
+    console.log(partition_row,id);
+    request({
+        url:'/api/partition_file_b',
+        data:{
+            partition_row,
+            file_id:file_id[0].file_id,
+            id
+        },
+        success: res => {
+          // console.log(res);
+            this.props.setVisible(false);
+            this.fetchProcessList();
+        }
+    })
+  }
+    fetchProcessList = () => {
+        request({
+            url:'/api/get_file_list',
+            data:{
+                id:this.props.id,
+                keyword:'',
+                file_type:'',
+            },
+            success: ({table}) => {
+                store2.setProcessList(table);
+            }
+        })
+    }
 }
 export default Form.create()(partitionFileB);
