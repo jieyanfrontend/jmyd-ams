@@ -6,7 +6,8 @@ import request from '../../helpers/request';
 import hasErrors from '../../helpers/has-errors';
 import store from '../process/store';
 import exportFile from "../../helpers/export-file";
-import style from './edit_b.css'
+import style from './edit_b.css';
+import ReactDom from 'react-dom';
 class EditB extends Component {
   render() {
     let { selectedItem, visible, form } = this.props;
@@ -35,6 +36,7 @@ class EditB extends Component {
         onCancel={this.closeModal}
         footer={<ModalFooter />}
         {...CommonModalConfig}
+        destroyOnClose={true}
       >
         <Form>
           <Form.Item label="文件类型" {...CommonFormConfig}>
@@ -67,7 +69,6 @@ class EditB extends Component {
                   initialValue: remark,
                 })(<Input />)}
                 <span className={style.pl25}><a onClick={this.exportFileA}>{file_name}</a></span>
-
           </Form.Item>
           {editType === 'edit' ? null : (
             <Form.Item
@@ -93,6 +94,9 @@ class EditB extends Component {
   }
   componentDidMount() {
     this.props.form.validateFields();
+  }
+  componentWillUnMount(){
+    console.log('componentUnMount')
   }
   ensure = () => {
     let selectItem = this.props.selectedItem;
@@ -152,6 +156,7 @@ class EditB extends Component {
   closeModal = () => {
     let { setVisible } = this.props;
     setVisible(false);
+      // ReactDom.unmountComponentAtNode(<Modal/>)
   };
   fetchProcessList = () => {
     request({

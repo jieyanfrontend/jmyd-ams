@@ -167,7 +167,7 @@ class CreateFileE extends Component {
                 },
               ],
             })(
-              <Upload {...this.uploadProps2} fileList={fileList}>
+              <Upload {...this.uploadProps2} fileList={fileList} multiple={true}>
                 <Button>选择文件</Button>
               </Upload>
             )}
@@ -191,16 +191,7 @@ class CreateFileE extends Component {
     let { fileList } = file;
     let fileList1 = fileList[0];
     let fileList2 = values.file.fileList[1];
-    // let name1 = fileList1.name;
-    // let name2 = fileList2.name;
-    // let validateName1;
-    // let validateName2;
-    // if (name1.indexOf('_normal') !== -1 || name1.indexOf('_error') !== -1) {
-    //   return [[validateName1 = true]]
-    // }
-    // if (name2.indexOf('_normal') !== -1 || name2.indexOf('_error') !== -1) {
-    //   return validateName2 = true;
-    // }
+
       if (canCreate) {
           // if (validateName1 && validateName2) {
               // let formData = new FormData();

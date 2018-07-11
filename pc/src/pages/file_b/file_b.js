@@ -952,7 +952,7 @@ class CreateFileB extends Component {
         footer={<ModalFooter />}
         onCancel={() => setVisible(false)}
         width={800}
-      >
+        destroyOnClose={true}      >
         <Form>
           <Form.Item label="效率100编号" {...formProps}>
             {/*{*/}

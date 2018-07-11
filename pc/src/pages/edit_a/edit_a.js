@@ -24,7 +24,7 @@ class EditA extends Component{
       </React.Fragment>
     );
     return (
-      <Modal visible={editVisible} title={`${modalTitle}----一级明细`} onCancel={this.closeModal} footer={<ModalFooter/>} {...CommonModalConfig}>
+      <Modal visible={editVisible} title={`${modalTitle}----一级明细`} onCancel={this.closeModal} footer={<ModalFooter/>} destroyOnClose={true} {...CommonModalConfig}>
         <Form>
           <Form.Item label='编号' { ...CommonFormConfig}>{id}</Form.Item>
           <Form.Item
@@ -82,19 +82,13 @@ class EditA extends Component{
   }
   ensure = () => {
     let selectItem = this.props.selectedItem;
-    // console.log(selectItem);
     let { getFieldsError } = this.props.form;
-    // console.log(getFieldsError);
-    // console.log(getFieldsError());
     let canPost = !hasErrors(getFieldsError);
-    // console.log(canPost);
     if(canPost){
       if(selectItem.editType === 'edit'){
         this._edit();
-          // console.log(getFieldsError)
       }else{
         this._delete();
-        // console.log(getFieldsError)
       }
     }
   };
@@ -113,7 +107,6 @@ class EditA extends Component{
           this.fetchFileAList();
       },
       fail: () => {
-        // this.closeModal();
       }
     })
   };
@@ -132,7 +125,6 @@ class EditA extends Component{
           this.fetchFileAList();
       },
       fail: () => {
-        // this.closeModal();
       }
     })
   };
@@ -147,7 +139,6 @@ class EditA extends Component{
                 keyword: ''
             },
             success: ({table}) => {
-                // console.log(table);
                 store.setFileAList(table);
             }
         })
