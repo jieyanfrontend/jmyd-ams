@@ -23,8 +23,8 @@ class App extends Component {
                           <Route path='/process/:id/:wf_id' render={({match}) => <WrapperComponent match={match} globalStore={globalStore} Comp={import('./process/process')} name='process'/>}/>
                           <Route path='/login' render={() => <WrapperComponent globalStore={globalStore} Comp={import('./login/login')} name='login'/>}/>
                           <Route path='/detailpage' render={() => <WrapperComponent globalStore={globalStore} Comp={import('./detailpage/detailpage')} name='detailpage'/>}/>
-                          <Route path='/batchprocess' render={() => <WrapperComponent Comp={import('./batchprocess/batchprocess')} name='batchprocess'/>}/>
-                          <Route path='/cafile' render={() => <WrapperComponent Comp={import('./cafile/cafile')} name='cafile'/>}/>
+                          {/*<Route path='/batchprocess' render={() => <WrapperComponent Comp={import('./batchprocess/batchprocess')} name='batchprocess'/>}/>*/}
+                          {/*<Route path='/cafile' render={() => <WrapperComponent Comp={import('./cafile/cafile')} name='cafile'/>}/>*/}
                           <Route render={() => <WrapperComponent globalStore={globalStore} Comp={import('./task/task')}/>}/>
                         </Switch>
                     </div>

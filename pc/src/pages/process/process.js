@@ -96,10 +96,11 @@ class Process extends React.Component{
         return (
             <div className={'init-height'}>
                 <a onClick={this.goBack}>
-                    <Breadcrumb.Item>返回</Breadcrumb.Item>
+                    {/*<Breadcrumb.Item>返回</Breadcrumb.Item>*/}
+                    <Button type="primary">返回</Button>
                 </a>
                 <SelectBar />
-                <Table dataSource={dataSource} columns={this.columns} rowKey='file_name'/>
+                <Table dataSource={dataSource} columns={this.columns} rowKey='file_id'/>
                 <EditB setVisible={this.setEditVisible} visible={visible} selectedItem={selectedItem} id={this.props.match.params.id}/>
                 <PartitionFileB setVisible={this.setPartitionVisible} visible={visible} dataSource={dataSource} wf_id={this.props.match.params.wf_id} id={this.props.match.params.id}/>
                 <CreateFileB setVisible={this.setFileBVisible} visible={visible} wf_id={this.props.match.params.wf_id} id={this.props.match.params.id}/>

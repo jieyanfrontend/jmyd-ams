@@ -25,7 +25,7 @@ class CreateFileB extends Component {
   };
   allTypes = {
     批开停开机: {
-      opertaion_type: 1,
+        operation_type: 1,
       dataSource: [
         {
           order: '1',
@@ -68,7 +68,7 @@ class CreateFileB extends Component {
       },
     },
     批量密码重置: {
-      opertaion_type: 2,
+        operation_type: 2,
       dataSource: [
         {
           order: '1',
@@ -111,7 +111,7 @@ class CreateFileB extends Component {
       },
     },
     批量主题产品转换: {
-      opertaion_type: 3,
+        operation_type: 3,
       dataSource: [
         {
           order: '1',
@@ -154,7 +154,7 @@ class CreateFileB extends Component {
       },
     },
     批量HLR重置业务: {
-      opertaion_type: 4,
+        operation_type: 4,
       dataSource: [
         {
           order: '1',
@@ -197,7 +197,7 @@ class CreateFileB extends Component {
       },
     },
     批量实名登记: {
-      opertaion_type: 5,
+        operation_type: 5,
       dataSource: [
         {
           order: '1',
@@ -300,7 +300,7 @@ class CreateFileB extends Component {
       },
     },
     批量更改客户资料: {
-      opertaion_type: 6,
+        operation_type: 6,
       dataSource: [
         {
           order: '1',
@@ -403,7 +403,7 @@ class CreateFileB extends Component {
       },
     },
     批量订单回退: {
-      opertaion_type: 7,
+        operation_type: 7,
       dataSource: [
         {
           order: 1,
@@ -471,7 +471,7 @@ class CreateFileB extends Component {
       },
     },
     批量产品订购退订与变更: {
-      opertaion_type: 8,
+        operation_type: 8,
       dataSource: [
         {
           order: 1,
@@ -539,7 +539,7 @@ class CreateFileB extends Component {
       },
     },
     批量密码重置_指定密码: {
-      opertaion_type: 9,
+        operation_type: 9,
       dataSource: [
         {
           order: 1,
@@ -597,7 +597,7 @@ class CreateFileB extends Component {
       },
     },
     批量产品订购退订: {
-      opertaion_type: 10,
+        operation_type: 10,
       dataSource: [
         {
           order: 1,
@@ -664,8 +664,8 @@ class CreateFileB extends Component {
             return (
               <div>
                 {getFieldDecorator('word4', {})(
-                  <RadioGroup name="操作类型代码" initialValue={'N'}>
-                    <Radio value="N">N</Radio>
+                  <RadioGroup name="操作类型代码" value={"N"}>
+                    <Radio value={"N"}>N</Radio>
                     <Radio value={inputValue}>
                       <Input
                         placeholder="其他"
@@ -704,8 +704,8 @@ class CreateFileB extends Component {
             return (
               <div>
                 {getFieldDecorator('word6', {})(
-                  <RadioGroup name="附加属性编码" initialValue={'无'}>
-                    <Radio value="无">无</Radio>
+                  <RadioGroup name="附加属性编码" initialValue={'null'}>
+                    <Radio value="null">无</Radio>
                     <Radio value={inputValue}>
                       <Input
                         placeholder="其他"
@@ -746,7 +746,7 @@ class CreateFileB extends Component {
       },
     },
     批量多层产品订购退订: {
-      opertaion_type: 11,
+        operation_type: 11,
       dataSource: [
         {
           order: 1,
@@ -936,7 +936,6 @@ class CreateFileB extends Component {
     let fileBVisible = visible.file_b;
     let type = store.type;
     let { dataSource, columns, example = {} } = allTypes[type];
-    // console.log(getFieldsValue);
     let ModalFooter = () => (
       <React.Fragment>
         <Button onClick={() => setVisible(false)}>取消</Button>
@@ -955,15 +954,15 @@ class CreateFileB extends Component {
         destroyOnClose={true}      >
         <Form>
           <Form.Item label="效率100编号" {...formProps}>
-            {/*{*/}
-            {/*getFieldDecorator('wf_id',{*/}
-            {/*initialValue: wf_id,*/}
-            {/*rules: [{*/}
-            {/*required: true,*/}
-            {/*message: '请输入效率100编号'*/}
-            {/*}]*/}
-            {/*})(<Input/>)*/}
-            {/*}*/}
+          {/*  {
+            getFieldDecorator('wf_id',{
+            initialValue: wf_id,
+            rules: [{
+            required: true,
+            message: '请输入效率100编号'
+            }]
+            })(<Input/>)
+            }*/}
             <Input disabled={true} defaultValue={wf_id} />
           </Form.Item>
           <Form.Item label="操作类型" {...formProps}>
@@ -999,7 +998,7 @@ class CreateFileB extends Component {
       let values = getFieldsValue();
       let {word1,word2,word3,word4,word5,word6,word7,word8,word9} = values;
       let type = store.type;
-      let operation_type = allTypes[type].opertaion_type;
+      let operation_type = allTypes[type].operation_type;
       let{dataSource} = allTypes[type];
       console.log(dataSource);
       let id = this.props.id;
@@ -1025,8 +1024,8 @@ class CreateFileB extends Component {
           that.fetchProcessList();
         },
         fail: data => {
-          // console.log(data);
-          //this.props.store.setCreateVisible(false);
+        /*  console.log(data);
+          this.props.store.setCreateVisible(false);*/
         },
       });
     }

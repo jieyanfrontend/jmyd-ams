@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, autorun} from 'mobx';
 class Store {
   @observable type = '批开停开机';
   @action
@@ -17,4 +17,5 @@ class Store {
         this.inputValue = value;
     }
 }
+
 export default new Store();
