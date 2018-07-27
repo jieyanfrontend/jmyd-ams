@@ -5,6 +5,11 @@ class Store{
     setFileIds(value){
         this.file_ids = value;
     }
+    @observable loading = false;
+    @action
+    setLoading(res){
+        this.loading = res;
+    }
     @observable resTableC = {};
     @action
     setTable(value) {

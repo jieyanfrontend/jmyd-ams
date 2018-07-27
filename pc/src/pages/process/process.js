@@ -12,6 +12,7 @@ import CreateFileE from '../file_e/file_e';
 import PartitionFileB from '../partition_fileb/partition_fileb'
 import request from '../../helpers/request';
 import exportFile from '../../helpers/export-file';
+import {Modal} from "antd/lib/index";
 let file_type =['全部','A类文件','B类文件','C类文件','D类文件','E类文件'];
 @observer
 class Process extends React.Component{
@@ -55,7 +56,7 @@ class Process extends React.Component{
         </span>)
     }];
     render(){
-        let {visible, list, process_list, selectedItem} = store;
+        let {visible, list, process_list, selectedItem, loading} = store;
         let { file_types } = list;
         // console.log(process_list);
         // let dataSource = Array.from(process_list);
@@ -76,6 +77,9 @@ class Process extends React.Component{
                         ))}
                         </Select>
                     )}
+                </Form.Item>
+                <Form.Item>
+                    <Button type={'primary'} onClick={() => this.handleQuery()}>查询</Button>
                 </Form.Item>
                 <Form.Item>
                     <Button type='primary' onClick={() => this.fileBItem()}>创建B类文件</Button>
@@ -100,7 +104,7 @@ class Process extends React.Component{
                     <Button type="primary">返回</Button>
                 </a>
                 <SelectBar />
-                <Table dataSource={dataSource} columns={this.columns} rowKey='file_id'/>
+                <Table dataSource={dataSource} columns={this.columns} rowKey='file_id' loading={loading}/>
                 <EditB setVisible={this.setEditVisible} visible={visible} selectedItem={selectedItem} id={this.props.match.params.id}/>
                 <PartitionFileB setVisible={this.setPartitionVisible} visible={visible} dataSource={dataSource} wf_id={this.props.match.params.wf_id} id={this.props.match.params.id}/>
                 <CreateFileB setVisible={this.setFileBVisible} visible={visible} wf_id={this.props.match.params.wf_id} id={this.props.match.params.id}/>
@@ -114,6 +118,7 @@ class Process extends React.Component{
         // console.log(this.props);
     }
     fetchProcessList = () => {
+        store.setLoading(true)
         request({
             url:'/api/get_file_list',
             data:{
@@ -122,9 +127,20 @@ class Process extends React.Component{
                 file_type:'',
             },
             success: ({table}) => {
-                // console.log(table);
                 store.setProcessList(table);
+            },
+            fail: (res) => {
+                this.warning(res);
+            },
+            complete: () => {
+                store.setLoading(false)
             }
+        })
+    }
+    warning=  (res) => {
+        Modal.warning({
+            title:'警告',
+            content: res.msg
         })
     }
     goBack = (e) => {
@@ -192,6 +208,23 @@ class Process extends React.Component{
             edit: true
         })
     };
+    handleQuery = ()=>{
+        let { form } = this.props;
+        let { getFieldsValue } = form;
+        let values = getFieldsValue();
+        let file_type = values.type;
+        request({
+            url: '/api/get_file_list',
+            data:{
+                id:this.props.match.params.id,
+                file_type: file_type,
+                keyword: ''
+            } ,
+            success: ({table}) => {
+                store.setProcessList(table);
+            }
+        })
+    }
     exportFileA = (file_id)=>{
         let{match} = this.props;
         let {params} = match;

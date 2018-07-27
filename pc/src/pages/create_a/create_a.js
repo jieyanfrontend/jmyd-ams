@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Form, Modal, Input, Upload, Button, Icon} from 'antd';
+import {Form, Modal, Input, Upload, Button, Icon, DatePicker} from 'antd';
 import commonFormProps from '../../config/common-form';
 import commonModalProps from '../../config/common-modal';
 import request from '../../helpers/request';
@@ -75,6 +75,19 @@ class CreateA extends Component {
                             <Input/>
                         )
                     }</Form.Item>
+{/*                    <Form.Item
+                        help={titleErr ? titleErr : ''}
+                        validateStatus={titleErr ? 'error' : ''}
+                        label='创建时间' {...commonFormProps}> {
+                        getFieldDecorator('create_time', {
+                            rules: [{
+                                required: true,
+                                message: '请输入创建时间'
+                            }]
+                        })(
+                            <DatePicker />
+                        )
+                    }</Form.Item>*/}
                     <Form.Item
                         help={fileErr ? fileErr : ''}
                         validateStatus={fileErr ? 'error' : ''}
@@ -96,34 +109,35 @@ class CreateA extends Component {
             </Modal>
         )
     }
-    //
-    // componentDidMount() {
-    //     this.props.form.validateFields();
-    // }
-
     createA = () => {
         let {getFieldsValue, getFieldsError} = this.props.form;
-        console.log(this.state.fileList);
+        let values = getFieldsValue();
+        let {wf_id, title,} = values;
         let canCreate = !hasErrors(getFieldsError());
         if (canCreate) {
-            let values = getFieldsValue();
-            // let {...other,file } = values
-            // console.log(values);
             request({
                 url: '/api/create_flow',
-                data: {...values,
+                data: {
+                    wf_id,
+                    title,
                     file: values.file.file},
                 postType: 'formdata',
-                success: (data) => {
+                success: (res) => {
                     this.props.setVisible(false);
                     this.fetchFileAList();
                 },
-                fail: (data) => {
-                    // console.log(data);
-                    // this.props.store.setCreateVisible(false);
+                fail: (res) => {
+                    this.warning(res)
+                    this.props.setVisible(false);
                 }
             })
         }
+    };
+    warning = (res) => {
+        Modal.warning({
+            title:'警告',
+            content: res.msg
+        })
     };
     fetchFileAList = () => {
         request({

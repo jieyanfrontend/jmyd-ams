@@ -9,6 +9,7 @@ import EditA from '../edit_a/edit_a';
 import request from '../../helpers/request';
 import history from '../../history';
 import exportFile from '../../helpers/export-file';
+import {Modal} from "antd/lib/index";
 const Search = Input.Search;
 @observer
 class BatchProcess extends React.Component{
@@ -38,7 +39,7 @@ class BatchProcess extends React.Component{
         )
     }];
     render(){
-        let { visible, list, selectedItem, fileAList } = store;
+        let { visible, list, selectedItem, fileAList, loading,} = store;
         let dataSource = Array.from(fileAList);
         let { wf_ids, titles, creators } = list;
         let { getFieldDecorator } = this.props.form;
@@ -64,26 +65,6 @@ class BatchProcess extends React.Component{
                         <Search placeholder='请输入关键字' enterButton/>
                     )}
                 </Form.Item>
-                {/*<Form.Item label='标题'>{*/}
-                {/*getFieldDecorator('title', {*/}
-                {/*initialValue: '0'*/}
-                {/*})(*/}
-                {/*<Select className={style.select}>*/}
-                {/*<Option value='0'>全部</Option>{titles.map(t => (*/}
-                {/*<Option key={t} value={t}>{t}</Option>*/}
-                {/*))}</Select>*/}
-                {/*)*/}
-                {/*}</Form.Item>*/}
-                {/*<Form.Item label='创建人'>{*/}
-                {/*getFieldDecorator('creator', {*/}
-                {/*initialValue: '0'*/}
-                {/*})(*/}
-                {/*<Select className={style.select}>*/}
-                {/*<Option value='0'>全部</Option>{creators.map(c => (*/}
-                {/*<Option key={c} value={c}>{c}</Option>*/}
-                {/*))}</Select>*/}
-                {/*)*/}
-                {/*}</Form.Item>*/}
             </Form>
         );
         return(
@@ -92,7 +73,7 @@ class BatchProcess extends React.Component{
                 <div className={style.action_bar}>
                     <Button type='primary' onClick={this.createA}>创建任务</Button>
                 </div>
-                <Table columns={this.columns} dataSource={dataSource} rowKey='id'/>
+                <Table columns={this.columns} dataSource={dataSource} rowKey='id' loading={loading}/>
                 <CreateA setVisible={this.setCreateVisible} visible={visible} selectedItem={selectedItem}/>
                 <EditA setVisible={this.setEditVisible} visible={visible} selectedItem={selectedItem}/>
             </div>
@@ -100,12 +81,12 @@ class BatchProcess extends React.Component{
     }
     componentDidMount(){
         this.fetchFileAList();
-        // console.log(1);
     }
     createA = () => {
         this.setCreateVisible(true);
     };
     fetchFileAList = () => {
+        store.setLoading(true)
         request({
             url: '/api/get_flow_list',
             data: {
@@ -113,9 +94,21 @@ class BatchProcess extends React.Component{
             },
             success: ({table}) => {
                 store.setFileAList(table);
+            },
+            fail: (res) => {
+                this.warning(res);
+            },
+            complete: () => {
+                store.setLoading(false)
             }
         })
     };
+    warning = (res) => {
+        Modal.warning({
+            title:'警告',
+            content: res.msg
+        })
+    }
     handQuery = ()=>{
         let {form} = this.props;
         let {getFieldsValue} = form;

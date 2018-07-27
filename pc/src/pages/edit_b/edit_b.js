@@ -148,11 +148,18 @@ class EditB extends Component {
         this.closeModal();
         this.fetchProcessList()
       },
-      fail: () => {
-        // this.closeModal();
+      fail: (res) => {
+        this.closeModal();
+        this.warning(res);
       },
     });
   };
+    warning=  (res) => {
+        Modal.warning({
+            title:'警告',
+            content: res.msg
+        })
+    }
   closeModal = () => {
     let { setVisible } = this.props;
     setVisible(false);

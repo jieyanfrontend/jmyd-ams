@@ -2,11 +2,16 @@ import { observable, action, computed } from 'mobx';
 class Store {
   @observable visible = {
     create: false,
-    edit: false
+    edit: false,
   };
   @action
   setVisible(type){
     this.visible = Object.assign({}, this.visible, type);
+  }
+  @observable loading = false;
+  @action
+  setLoading(res){
+    this.loading = res;
   }
   @observable fileAList = [];
   @action

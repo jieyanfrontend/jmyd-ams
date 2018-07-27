@@ -11,6 +11,11 @@ class Store {
     setVisible(type){
         this.visible = Object.assign({}, this.visible, type);
     }
+    @observable loading = false;
+    @action
+    setLoading(res){
+        this.loading = res;
+    }
   @observable process_list = [];
   @action
   setProcessList(list){

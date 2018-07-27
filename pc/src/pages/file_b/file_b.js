@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Form, Input, Select, Table, Radio, Button } from 'antd';
+import { Modal, Form, Input, Select, Table, Radio, Button, Spin } from 'antd';
 import { observer } from 'mobx-react';
 import store from './store';
 import store2 from '../process/store';
@@ -932,7 +932,7 @@ class CreateFileB extends Component {
   render() {
     let { visible, setVisible, wf_id, form } = this.props;
     let allTypes = this.allTypes;
-    let { getFieldDecorator, getFieldsValue } = form;
+    let { getFieldDecorator, getFieldsValue, getFieldValue,getFieldError, getFieldsError } = form;
     let fileBVisible = visible.file_b;
     let type = store.type;
     let { dataSource, columns, example = {} } = allTypes[type];
@@ -952,38 +952,50 @@ class CreateFileB extends Component {
         onCancel={() => setVisible(false)}
         width={800}
         destroyOnClose={true}      >
-        <Form>
-          <Form.Item label="效率100编号" {...formProps}>
-          {/*  {
-            getFieldDecorator('wf_id',{
-            initialValue: wf_id,
-            rules: [{
-            required: true,
-            message: '请输入效率100编号'
-            }]
-            })(<Input/>)
-            }*/}
-            <Input disabled={true} defaultValue={wf_id} />
-          </Form.Item>
-          <Form.Item label="操作类型" {...formProps}>
-            <Select defaultValue={'批开停开机'} onChange={this.changeSelectType}>
-              {Object.keys(allTypes).map(type => (
-                <Option value={type} key={type}>
-                  {type}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item label="输出格式" {...formProps}>
-            <Table dataSource={dataSource} columns={columns} pagination={false} rowKey="order" size={'small'} />
-          </Form.Item>
-          <Form.Item label="输入示例" {...formProps}>
-            {example.input}
-          </Form.Item>
-          <Form.Item label="输出示例" {...formProps}>
-            {example.output}
-          </Form.Item>
-        </Form>
+          <Spin spinning={store.loading}>
+            <Form>
+            <Form.Item label="效率100编号" {...formProps}>
+            {/*  {
+              getFieldDecorator('wf_id',{
+              initialValue: wf_id,
+              rules: [{
+              required: true,
+              message: '请输入效率100编号'
+              }]
+              })(<Input/>)
+              }*/}
+              <Input disabled={true} defaultValue={wf_id} />
+            </Form.Item>
+          {/*    <Form.Item label="创建时间" {...formProps}>
+              {
+              getFieldDecorator('create_time',{
+              rules: [{
+              required: true,
+              message: '请输入创建时间'
+              }]
+              })(<Input placeholder='必填' />)
+              }
+            </Form.Item>*/}
+            <Form.Item label="操作类型" {...formProps}>
+              <Select defaultValue={'批开停开机'} onChange={this.changeSelectType}>
+                {Object.keys(allTypes).map(type => (
+                  <Option value={type} key={type}>
+                    {type}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+            <Form.Item label="输出格式" {...formProps}>
+              <Table dataSource={dataSource} columns={columns} pagination={false} rowKey="order" size={'small'} />
+            </Form.Item>
+            <Form.Item label="输入示例" {...formProps}>
+              {example.input}
+            </Form.Item>
+            <Form.Item label="输出示例" {...formProps}>
+              {example.output}
+            </Form.Item>
+          </Form>
+        </Spin>
       </Modal>
     );
   }
@@ -996,14 +1008,15 @@ class CreateFileB extends Component {
     let allTypes = this.allTypes;
     if (canCreate) {
       let values = getFieldsValue();
-      let {word1,word2,word3,word4,word5,word6,word7,word8,word9} = values;
+      let {word1,word2,word3,word4,word5,word6,word7,word8,word9,} = values;
       let type = store.type;
       let operation_type = allTypes[type].operation_type;
       let{dataSource} = allTypes[type];
       console.log(dataSource);
       let id = this.props.id;
       let that = this;
-      request({
+        store.setLoading(true)
+        request({
         url: '/api/create_file_b',
         data: {
           operation_type,
@@ -1020,13 +1033,17 @@ class CreateFileB extends Component {
         },
         // postType: 'formdata',
         success: res => {
-          this.props.setVisible(false);
+            this.props.setVisible(false);
           that.fetchProcessList();
         },
-        fail: data => {
-        /*  console.log(data);
-          this.props.store.setCreateVisible(false);*/
+        fail: res => {
+            this.warning(res)
+            this.props.setVisible(false);
         },
+        complete: () => {
+            store.setLoading(false)
+            //do sth here
+        }
       });
     }
   };
@@ -1043,5 +1060,11 @@ class CreateFileB extends Component {
       },
     });
   };
+    warning=  (res) => {
+        Modal.warning({
+            title:'警告',
+            content: res.msg
+        })
+    }
 }
 export default Form.create()(CreateFileB);

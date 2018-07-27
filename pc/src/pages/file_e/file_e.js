@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Form, Select, Upload, Button, Table, message } from 'antd';
+import { Modal, Form, Select, Upload, Button, Table, message, Input, DatePicker, Spin } from 'antd';
 import request from '../../helpers/request';
 import hasErrors from '../../helpers/has-errors';
 import store from '../process/store';
@@ -133,17 +133,23 @@ class CreateFileE extends Component {
   };
   render() {
     let { visible, setVisible, form } = this.props;
-    let { getFieldDecorator } = form;
+    let { getFieldDecorator, getFieldValue } = form;
     let { fileList } = this.state;
     let fileEVisible = visible.file_e;
     let ModalFooter = () => (
       <React.Fragment>
         <Button onClick={() => setVisible(false)}>取消</Button>
-        <Button type="primary" onClick={this.createE}>
+        <Button type="primary" disabled={isDisabledBtn()} onClick={this.createE}>
           确认
         </Button>
       </React.Fragment>
     );
+      let isDisabledBtn = () => {
+          if(!getFieldValue('operation_time')){
+              return true
+          }
+          return false
+      }
     return (
       <Modal
         title="创建E类文件"
@@ -152,6 +158,7 @@ class CreateFileE extends Component {
         onCancel={() => setVisible(false)}
         width={800}
       >
+          <Spin spinning={store.loading}>
         <Form>
           <Form.Item label="文件类型" {...formProps}>
             <Select defaultValue="D类文件">
@@ -178,7 +185,18 @@ class CreateFileE extends Component {
           <Form.Item label="输出格式" {...formProps}>
             <Table rowKey="result" {...standards.output} {...tableProps} />
           </Form.Item>
+          <Form.Item label="创建时间" {...formProps}>
+            {getFieldDecorator('operation_time', {
+              rules: [
+                {
+                  required: true,
+                  message: '请输入创建时间',
+                },
+              ],
+            })(<DatePicker />)}
+          </Form.Item>
         </Form>
+          </Spin>
       </Modal>
     );
   }
@@ -187,38 +205,42 @@ class CreateFileE extends Component {
     let { getFieldsValue, getFieldsError } = this.props.form;
     let canCreate = !hasErrors(getFieldsError());
     let values = getFieldsValue();
-    let { file } = values;
+    let { file, operation_time } = values;
     let { fileList } = file;
-    let fileList1 = fileList[0];
-    let fileList2 = values.file.fileList[1];
-
-      if (canCreate) {
-          // if (validateName1 && validateName2) {
-              // let formData = new FormData();
-              // formData.append('file',fileList1);
-              // formData.append('file',fileList2);
-              // formData.append('id',id);
-        request({
-          url: '/api/create_file_e',
-          data: {
-            id,
-            file: fileList,
-          },
-          postType: 'formdata',
-          success: data => {
-            this.props.setVisible(false);
-            this.fetchProcessList();
-          },
-          fail: data => {
-              message.error('请选择正确的文件');
-              // console.log(data);
-            this.props.store.setCreateVisible(false);
-          },
-        });
-      }
+    operation_time = operation_time.format('YYYYMMDD');
+    console.log(operation_time);
+    if (canCreate) {
+      // if (validateName1 && validateName2) {
+      // let formData = new FormData();
+      // formData.append('file',fileList1);
+      // formData.append('file',fileList2);
+      // formData.append('id',id);
+        store.setLoading(true)
+      request({
+        url: '/api/create_file_e',
+        data: {
+          id,
+          operation_time,
+          file: fileList,
+        },
+        postType: 'formdata',
+        success: data => {
+          this.props.setVisible(false);
+          this.fetchProcessList();
+        },
+        fail: data => {
+          message.error('请选择正确的文件');
+          this.props.store.setCreateVisible(false);
+        },
+        complete: () => {
+              store.setLoading(false)
+          }
+      });
+    }
     // }
   };
   fetchProcessList = () => {
+      store.setLoading(true)
     request({
       url: '/api/get_file_list',
       data: {
@@ -229,6 +251,9 @@ class CreateFileE extends Component {
       success: ({ table }) => {
         store.setProcessList(table);
       },
+      complete: () => {
+            store.setLoading(false)
+        }
     });
   };
 }

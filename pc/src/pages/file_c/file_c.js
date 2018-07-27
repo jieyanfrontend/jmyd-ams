@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
-import { Modal, Table, Checkbox, Button, List, Form } from 'antd';
+import { Modal, Table, Checkbox, Button, List, Form, Input, Spin } from 'antd';
 import store from './store';
 import store2 from "../process/store";
 import { observer } from 'mobx-react';
 import exportFile from '../../helpers/export-file';
 import hasErrors from "../../helpers/has-errors";
 import request from "../../helpers/request";
+import commonFormProps from '../../config/common-form';
+
+let formProps = {
+    labelCol: {
+        span: 4,
+        gutter: 16,
+    },
+    wrapperCol: {
+        span: 18,
+        gutter: 16,
+    },
+};
 let file_type = ['全部', 'A类文件', 'B类文件', 'C类文件', 'D类文件', 'E类文件'];
 @observer
 class CreateFileC extends Component {
@@ -49,11 +61,10 @@ class CreateFileC extends Component {
   render() {
     let { visible, setVisible, dataSource } = this.props;
     let {resTableC} = store;
-    // console.log(resTableC);
-    // console.log(resTableC.table)
-    let { file_id } = dataSource;
-    // console.log(dataSource);
+    // let { file_id } = dataSource;
     let fileCVisible = visible.file_c;
+    let { getFieldDecorator, getFieldValue } = this.props.form;
+    let data = dataSource.filter(t => t.file_type == 2)
     let Footer = () => (
       <footer style={{ textAlign: 'right' }}>
         <Button type="primary" onClick={this.createC}>执行比对</Button>
@@ -62,12 +73,18 @@ class CreateFileC extends Component {
     let ModalFooter = () => (
       <React.Fragment>
         <Button onClick={() => setVisible(false)}>取消</Button>
-        <Button type="primary" onClick={this.handleConfirm}>
+        <Button type="primary"  onClick={this.handleConfirm}>
           确认
         </Button>
       </React.Fragment>
     );
-    return (
+    /*  let isDisabledBtn = () => {
+          if(!getFieldValue('operation_time')){
+              return true
+          }
+          return false
+      }*/
+      return (
       <Modal
         visible={fileCVisible}
         title="创建C类文件"
@@ -75,14 +92,26 @@ class CreateFileC extends Component {
         footer={<ModalFooter />}
         onCancel={() => setVisible(false)}
       >
-        <Table
+        <Table loading={store.loading}
           title={() => (
-            <div>
-                <span className="mr15">效率100编号：{this.props.wf_id}</span>
-            </div>
+                <Form>
+                    <Form.Item label="效率100编号" {...formProps}>
+                        <Input disabled={true} defaultValue={this.props.wf_id} />
+                    </Form.Item>
+                   {/* <Form.Item label="创建时间" {...formProps}>
+                        {
+                            getFieldDecorator('create_time',{
+                                rules: [{
+                                    required: true,
+                                    message: '请输入创建时间'
+                                }]
+                            })(<DatePicker />)
+                        }
+                    </Form.Item>*/}
+                </Form>
           )}
           pagination={{defaultPageSize:8}}
-          dataSource={dataSource}
+          dataSource={data}
           columns={this.columns}
           size="small"
           bordered={false}
@@ -125,12 +154,13 @@ class CreateFileC extends Component {
   };
   createC = ()=>{
       let { getFieldsValue, getFieldsError } =this.props.form;
+      let values = getFieldsValue();
+      let {file_ids} = store;
+      let id = this.props.id;
+      let all_ids = file_ids.toString();
       let canCreate = !hasErrors(getFieldsError());
       if(canCreate){
-          let values = getFieldsValue();
-          let {file_ids} = store;
-          let id = this.props.id;
-          let all_ids = file_ids.toString();
+          store.setLoading(true)
         request({
             url:'/api/create_file_c',
             data:{
@@ -143,11 +173,20 @@ class CreateFileC extends Component {
             },
             fail: res => {
                 store.setTable(res);
-                // console.log(store.resTableC)
+                this.warning(res)
+            },
+            complete: () => {
+                store.setLoading(false)
             }
         })
   }
 }
+    warning = (res) => {
+        Modal.warning({
+            title:'警告',
+            content: res.msg
+        })
+    }
 handleConfirm = ()=> {
       this.fetchProcessList();
       this.props.setVisible(false);

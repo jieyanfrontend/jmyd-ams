@@ -9,7 +9,6 @@ class EditA extends Component{
   render(){
     let { selectedItem, visible, form } = this.props;
     let { isFieldTouched, getFieldError,getFieldsError, getFieldDecorator } = form;
-    console.log(getFieldsError());
     let editVisible = visible.edit;
     let { editType, id, wf_id, title, creator, create_time } = selectedItem;
     let modalTitle = editType === 'edit' ? '编辑' : '删除';
@@ -23,7 +22,7 @@ class EditA extends Component{
         <Button type='primary' disabled={isDisabledBtn} onClick={this.ensure}>确定</Button>
       </React.Fragment>
     );
-    return (
+      return (
       <Modal visible={editVisible} title={`${modalTitle}----一级明细`} onCancel={this.closeModal} footer={<ModalFooter/>} destroyOnClose={true} {...CommonModalConfig}>
         <Form>
           <Form.Item label='编号' { ...CommonFormConfig}>{id}</Form.Item>
@@ -106,10 +105,17 @@ class EditA extends Component{
         this.closeModal();
           this.fetchFileAList();
       },
-      fail: () => {
+      fail: (res) => {
+        this.warning(res)
       }
     })
   };
+    warning=  (res) => {
+        Modal.warning({
+            title:'警告',
+            content: res.msg
+        })
+    }
   _delete = () => {
     let { form } = this.props;
     let { reason } = form.getFieldsValue();

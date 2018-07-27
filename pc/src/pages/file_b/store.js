@@ -5,6 +5,11 @@ class Store {
   changeType(type){
     this.type = type;
   }
+  @observable loading = false;
+  @action
+  setLoading(res) {
+      this.loading = res;
+  }
  @observable wf_id = {
  }
  @action
