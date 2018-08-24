@@ -5,6 +5,8 @@ import CommonFormConfig from '../../config/common-form';
 import request from '../../helpers/request';
 import hasErrors from '../../helpers/has-errors';
 import store from "../batch_process/store";
+import messageSuccess from '../../helpers/successMessage';
+
 class EditA extends Component{
   render(){
     let { selectedItem, visible, form } = this.props;
@@ -103,10 +105,11 @@ class EditA extends Component{
       },
       success: res => {
         this.closeModal();
+          messageSuccess(res);
           this.fetchFileAList();
       },
       fail: (res) => {
-        this.warning(res)
+        // this.warning(res)
       }
     })
   };
@@ -115,7 +118,7 @@ class EditA extends Component{
             title:'警告',
             content: res.msg
         })
-    }
+    };
   _delete = () => {
     let { form } = this.props;
     let { reason } = form.getFieldsValue();
@@ -126,11 +129,13 @@ class EditA extends Component{
         id,
         reason
       },
-      success: () => {
+      success: (res) => {
         this.closeModal();
+        messageSuccess(res)
           this.fetchFileAList();
       },
-      fail: () => {
+      fail: (res) => {
+          // this.warning(res)
       }
     })
   };

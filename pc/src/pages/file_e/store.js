@@ -6,6 +6,16 @@ class Store {
     setLoading(res){
         this.loading = res;
     }
+    @observable isDisabledBtn = false;
+    @action
+    changeBtn(type){
+        this.isDisabledBtn = type
+    }
+    @observable isDisabledBtn = false;
+    @action
+    changeBtn(type){
+        this.isDisabledBtn = type
+    }
 }
 
 export default new Store();

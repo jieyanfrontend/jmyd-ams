@@ -31,8 +31,6 @@ class CreateA extends Component {
 
     render() {
         let {form, setVisible, visible} = this.props;
-        // console.log(this.props)
-        // console.log(form);
         let {fileList} = this.state;
         let createVisible = visible.create;
         let {getFieldDecorator, isFieldTouched, getFieldError, getFieldsError} = form;
@@ -112,25 +110,29 @@ class CreateA extends Component {
     createA = () => {
         let {getFieldsValue, getFieldsError} = this.props.form;
         let values = getFieldsValue();
-        let {wf_id, title,} = values;
+        let {wf_id, title, file} = values;
         let canCreate = !hasErrors(getFieldsError());
-        if (canCreate) {
-            request({
-                url: '/api/create_flow',
-                data: {
-                    wf_id,
-                    title,
-                    file: values.file.file},
-                postType: 'formdata',
-                success: (res) => {
-                    this.props.setVisible(false);
-                    this.fetchFileAList();
-                },
-                fail: (res) => {
-                    this.warning(res)
-                    this.props.setVisible(false);
-                }
-            })
+        if(!file){
+            alert('请选择上传文件')
+        }else{
+            if (canCreate) {
+                request({
+                    url: '/api/create_flow',
+                    data: {
+                        wf_id,
+                        title,
+                        file: file.file},
+                    postType: 'formdata',
+                    success: (res) => {
+                        this.props.setVisible(false);
+                        this.fetchFileAList();
+                    },
+                    fail: (res) => {
+                        this.warning(res)
+                        this.props.setVisible(false);
+                    }
+                })
+            }
         }
     };
     warning = (res) => {
@@ -146,7 +148,6 @@ class CreateA extends Component {
                 keyword: ''
             },
             success: ({table}) => {
-                console.log(table);
                 store.setFileAList(table);
             }
         })

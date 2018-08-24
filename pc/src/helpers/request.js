@@ -1,5 +1,7 @@
 import handleJson from './handle-json';
 import handleFormData from './handle-formdata';
+import history from '../history'
+import {Modal} from "antd";
 
 function request({ url, method = 'POST', postType = 'json' ,data = {}, success = () => {}, fail = () => {}, complete = () => {}}) {
     if(!url){
@@ -34,15 +36,30 @@ function request({ url, method = 'POST', postType = 'json' ,data = {}, success =
                 if(parseInt(data.code) === 200){
                     success(data);
                 }else{
-                    fail(data);
+                    if(data.code === 403){
+                        history.push('/login');
+                        Modal.warning({
+                            title:'警告',
+                            content: data.msg
+                        })
+                    }else{
+                        Modal.warning({
+                            title:'警告',
+                            content: data.msg
+                        });
+                        fail(data)
+                    }
                 }
             }else{
                 alert('请求遇到了问题，请稍后再尝试');
-                fail();
+                fail(data);
             }
             complete();
         }
     };
     xml.send(postData);
+
 }
+
+
 export default request;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { Layout } from 'antd';
 import IncludeHeader from './includes/header';
 const { Header, Content } = Layout;
@@ -9,7 +9,9 @@ import style from './index.css';
 class App extends Component {
     render(){
         let { globalStore } = this.props;
-        return (
+        let pathName = this.props.history.location.pathname;
+        let unLogin = pathName === '/login' || (pathName !== '/login' && sessionStorage.getItem('username'));
+        return unLogin ? (
             <Layout className={style.layout}>
                 <Header className={style.header}>
                     <IncludeHeader/>
@@ -22,14 +24,13 @@ class App extends Component {
                           <Route path='/batch_process' render={() => <WrapperComponent globalStore={globalStore} Comp={import('./batch_process/batch_process')} name='batch_process'/>}/>
                           <Route path='/process/:id/:wf_id' render={({match}) => <WrapperComponent match={match} globalStore={globalStore} Comp={import('./process/process')} name='process'/>}/>
                           <Route path='/login' render={() => <WrapperComponent globalStore={globalStore} Comp={import('./login/login')} name='login'/>}/>
-                          <Route path='/detailpage' render={() => <WrapperComponent globalStore={globalStore} Comp={import('./detailpage/detailpage')} name='detailpage'/>}/>
-                          {/*<Route path='/batchprocess' render={() => <WrapperComponent Comp={import('./batchprocess/batchprocess')} name='batchprocess'/>}/>*/}
-                          {/*<Route path='/cafile' render={() => <WrapperComponent Comp={import('./cafile/cafile')} name='cafile'/>}/>*/}
                           <Route render={() => <WrapperComponent globalStore={globalStore} Comp={import('./task/task')}/>}/>
                         </Switch>
                     </div>
                 </Content>
             </Layout>
+        ) : (
+            <Redirect to='/login'/>
         )
     }
 }

@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import style from './task.css';
-import { Card, Form, Input, Select, Button, Table, Divider, Upload, notification, Modal } from 'antd';
-const { Option } = Select;
-const { Search } = Input;
+import {Card, Form, Input, Select, Button, Table, Divider, Upload, notification, Modal, Spin, Icon} from 'antd';
 import request from '../../helpers/request';
 import exportFile from '../../helpers/export-file';
+
+const { Option } = Select;
+const { Search } = Input;
+const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
+
 let current_states = ['全部', '未预警', '已预警','超时 '];
 let finish_states = ['全部', '未完成', '已完成'];
 let follow_states = ['', '跟踪中', '暂停跟踪'];
@@ -169,7 +172,9 @@ class Task extends Component{
                     </div>
                 </Card>
                 <Card className={style.card + ' ' + style.table } bordered={false}>
-                    <Table pagination={{showSizeChanger: true, hideOnSinglePage: true, defaultPageSize: 20, pageSizeOptions: ['20', '50', '100', '200']}} loading={loading} rowSelection={rowSelection} columns={this.columns} dataSource={task_list} rowKey='id'/>
+                    <Spin spinning={loading} tip='加载中...' indicator={antIcon}>
+                        <Table pagination={{showSizeChanger: true, hideOnSinglePage: true, defaultPageSize: 20, pageSizeOptions: ['20', '50', '100', '200']}} rowSelection={rowSelection} columns={this.columns} dataSource={task_list} rowKey='id'/>
+                    </Spin>
                 </Card>
             </div>
         )
@@ -232,7 +237,6 @@ class Task extends Component{
         })
     };
     filterData = (table) => {
-        console.log(Date.now());
         let time_warnCount = 0;
         let time_outCount = 0;
         let warn_ids = [],

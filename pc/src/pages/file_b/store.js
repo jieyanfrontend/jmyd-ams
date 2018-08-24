@@ -5,6 +5,11 @@ class Store {
   changeType(type){
     this.type = type;
   }
+  @observable isDisabledBtn = false;
+  @action
+  changeBtn(type){
+      this.isDisabledBtn = type
+  }
   @observable loading = false;
   @action
   setLoading(res) {
@@ -16,10 +21,20 @@ class Store {
   setWf_id(wf_if){
     this.wf_id = wf_if;
  }
- @observable inputValue='';
+ @observable inputValue = {
+    word1Input: '',
+    word2Input: '',
+    word3Input: '',
+    word4Input: '',
+    word5Input: '',
+    word6Input: '',
+    word7Input: '',
+    word8Input: '',
+    word9Input: '',
+ };
   @action
     setInputValue(value){
-        this.inputValue = value;
+        this.inputValue = Object.assign({},this.inputValue,value);
     }
 }
 

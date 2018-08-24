@@ -6,6 +6,7 @@ import request from '../../helpers/request';
 import hasErrors from '../../helpers/has-errors';
 import store from '../process/store';
 import exportFile from "../../helpers/export-file";
+import messageSuccess from '../../helpers/successMessage';
 import style from './edit_b.css';
 import ReactDom from 'react-dom';
 class EditB extends Component {
@@ -13,7 +14,7 @@ class EditB extends Component {
     let { selectedItem, visible, form } = this.props;
     let { isFieldTouched, getFieldError, getFieldsError, getFieldDecorator } = form;
     let editVisible = visible.edit;
-    let { editType, wf_id, title, creator, create_time, file_type, remark, file_id, file_name } = selectedItem;
+    let { editType, wf_id, title, creator, create_time, file_type, remark, file_id, file_name,data_source } = selectedItem;
     let modalTitle = editType === 'edit' ? '编辑' : '删除';
     // let titleError = isFieldTouched('title') && getFieldError('title');
     // let wf_idError = isFieldTouched('wf_id') && getFieldError('wf_id');
@@ -48,8 +49,11 @@ class EditB extends Component {
           <Form.Item label="标题" {...CommonFormConfig}>
             {title}
           </Form.Item>
-          <Form.Item label="文件名称" {...CommonFormConfig}>
+          <Form.Item label="文件ID" {...CommonFormConfig}>
             {file_id}
+          </Form.Item>
+            <Form.Item label="数据来源" {...CommonFormConfig}>
+            {data_source}
           </Form.Item>
           <Form.Item label="创建人" {...CommonFormConfig}>
             {creator}
@@ -124,11 +128,15 @@ class EditB extends Component {
         file_id,
         remark: remark,
       },
-      success: () => {
+      success: (res) => {
         this.closeModal();
+        messageSuccess(res)
         this.fetchProcessList();
       },
-      fail: () => {},
+      fail: (res) => {
+        this.closeModal();
+        // this.warning(res);
+      },
     });
   };
   _delete = () => {
@@ -144,17 +152,18 @@ class EditB extends Component {
           file_id,
          reason,
       },
-      success: () => {
+      success: (res) => {
         this.closeModal();
+        messageSuccess(res)
         this.fetchProcessList()
       },
       fail: (res) => {
         this.closeModal();
-        this.warning(res);
+        // this.warning(res);
       },
     });
   };
-    warning=  (res) => {
+    warning = (res) => {
         Modal.warning({
             title:'警告',
             content: res.msg

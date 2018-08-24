@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import { Modal, Table, Checkbox, Button, Form, Input, Radio } from 'antd';
+import {Modal, Table, Checkbox, Button, Form, Input, Radio, Spin, Icon} from 'antd';
 // import request from '../../helpers/request';
 let file_type = ['全部', 'A类文件', 'B类文件', 'C类文件', 'D类文件', 'E类文件'];
 import store from './store';
 import { observer } from 'mobx-react';
 import request from '../../helpers/request';
 import store2 from "../process/store";
+import messageSuccess from "../../helpers/successMessage";
 // const RadioGroup = Radio.Group;
+const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
+
 @observer
 class partitionFileB extends Component {
   constructor(props) {
@@ -58,12 +61,12 @@ class partitionFileB extends Component {
     let partition = visible.partition;
     // dataSource = dataSource.filter(item => item.file_type == 2);
     // store.setDataPartition(dataSource);
-    let { partitionData } = store;
+    let { partitionData, isDisabledBtn } = store;
     let dataSource = Array.from(partitionData);
     let ModalFooter = () => (
       <React.Fragment>
         <Button onClick={() => setVisible(false)}>取消</Button>
-        <Button type="primary" onClick={this.partitionFile}>
+        <Button type="primary" disabled={isDisabledBtn} onClick={this.partitionFile}>
           确认
         </Button>
       </React.Fragment>
@@ -76,40 +79,42 @@ class partitionFileB extends Component {
         onCancel={() => setVisible(false)}
         footer={<ModalFooter />}
       >
-        <Form>
-          <Form.Item>
-            <Table
-              title={() => (
-                <div>
-                  <span className="mr15">效率100编号：{this.props.wf_id}</span>
+          <Spin spinning={store.loading} indicator={antIcon}>
+              <Form>
+                  <Form.Item>
+                    <Table
+                      title={() => (
+                        <div>
+                          <span className="mr15">效率100编号：{this.props.wf_id}</span>
+                        </div>
+                      )}
+                      dataSource={dataSource}
+                      columns={this.columns}
+                      size="small"
+                      bordered={false}
+                      rowKey="file_name"
+                    />
+                  </Form.Item>
+                  <Form.Item>
+                <div className="pl20">
+                  <span>
+                    按每个文件{getFieldDecorator('partition_row', {
+                      initialValue: 1000,
+                      rules: [
+                        {
+                          required: true,
+                          message: '请输入分割行数',
+                        },
+                      ],
+                    })(<Input size={'small'} style={{ width: 60 }} />)}行分割,<br />
+                    <span style={{ fontSize: 12 }}>
+                      （自动在标题后缀+_001,比如关于优惠用户套餐_001，关于优惠用户套餐_002)
+                    </span>
+                  </span>
                 </div>
-              )}
-              dataSource={dataSource}
-              columns={this.columns}
-              size="small"
-              bordered={false}
-              rowKey="file_name"
-            />
-          </Form.Item>
-          <Form.Item>
-            <div className="pl20">
-              <span>
-                按每个文件{getFieldDecorator('partition_row', {
-                  initialValue: 1000,
-                  rules: [
-                    {
-                      required: true,
-                      message: '请输入分割行数',
-                    },
-                  ],
-                })(<Input size={'small'} style={{ width: 60 }} />)}行分割,<br />
-                <span style={{ fontSize: 12 }}>
-                  （自动在标题后缀+_001,比如关于优惠用户套餐_001，关于优惠用户套餐_002)
-                </span>
-              </span>
-            </div>
-          </Form.Item>
-        </Form>
+              </Form.Item>
+              </Form>
+          </Spin>
       </Modal>
     );
   }
@@ -152,6 +157,8 @@ class partitionFileB extends Component {
     console.log(file_id);
     let { partition_row } = form.getFieldsValue();
     console.log(partition_row,id);
+    store.changeBtn(true);
+    store.setLoading(true);
     request({
         url:'/api/partition_file_b',
         data:{
@@ -162,10 +169,24 @@ class partitionFileB extends Component {
         success: res => {
           // console.log(res);
             this.props.setVisible(false);
+            messageSuccess(res)
             this.fetchProcessList();
+        },
+        fail: res => {
+            this.warning(res)
+        },
+        complete: () => {
+            store.changeBtn(false);
+            store.setLoading(false);
         }
     })
-  }
+  };
+    warning = (res) => {
+        Modal.warning({
+            title:'警告',
+            content: res.msg
+        })
+    }
     fetchProcessList = () => {
         request({
             url:'/api/get_file_list',
@@ -174,8 +195,8 @@ class partitionFileB extends Component {
                 keyword:'',
                 file_type:'',
             },
-            success: ({table}) => {
-                store2.setProcessList(table);
+            success: (res) => {
+                store2.setProcessList(res.table);
             }
         })
     }

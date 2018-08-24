@@ -1,8 +1,10 @@
 import { observable, action, computed } from 'mobx';
 class Store {
+    // @observable myKey = Math.random();
     @observable visible = {
         edit: false,
         file_b: false,
+        file_b_check: false,
         file_c:false,
         file_e:false,
         partition:false
@@ -15,6 +17,11 @@ class Store {
     @action
     setLoading(res){
         this.loading = res;
+    }
+    @observable isDisabledBtn = false;
+    @action
+    changeBtn(type){
+        this.isDisabledBtn = type
     }
   @observable process_list = [];
   @action
@@ -35,7 +42,7 @@ class Store {
   }
   @observable selectedItem = {
 
-}
+};
     @action
     setSelectedItem(item){
       this.selectedItem = item;

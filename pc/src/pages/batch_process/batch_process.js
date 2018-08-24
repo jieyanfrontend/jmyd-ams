@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Select, Button, Input, Table } from 'antd';
+import {Form, Select, Button, Input, Table, Spin, Icon} from 'antd';
 const Option = Select.Option;
 import { observer } from 'mobx-react';
 import store from './store';
@@ -10,9 +10,14 @@ import request from '../../helpers/request';
 import history from '../../history';
 import exportFile from '../../helpers/export-file';
 import {Modal} from "antd/lib/index";
+
 const Search = Input.Search;
+const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 @observer
 class BatchProcess extends React.Component{
+    state = {
+      loading:false
+    };
     columns = [{
         title: '编号',
         dataIndex: 'id'
@@ -45,25 +50,8 @@ class BatchProcess extends React.Component{
         let { getFieldDecorator } = this.props.form;
         let SelectBar = () => (
             <Form layout='inline'>
-                <Form.Item label='效率100编号'>{
-                    getFieldDecorator('wf_id', {
-                        initialValue: '0'
-                    })(
-                        <Select className={style.select}>
-                            <Option value='0'>全部</Option>{wf_ids.map(id => (
-                            <Option key={id} value={id}>{id}</Option>
-                        ))}</Select>
-                    )
-                }</Form.Item>
-                <Form.Item>
-                    <Button type='primary' onClick={this.handQuery}>查询</Button>
-                </Form.Item>
                 <Form.Item className={style.fr}>
-                    {getFieldDecorator('keyword',{
-                        initialValue:''
-                    })(
-                        <Search placeholder='请输入关键字' enterButton/>
-                    )}
+                    <Search placeholder='请输入关键字' onSearch={value => this.handQuery(value)} enterButton/>
                 </Form.Item>
             </Form>
         );
@@ -73,7 +61,9 @@ class BatchProcess extends React.Component{
                 <div className={style.action_bar}>
                     <Button type='primary' onClick={this.createA}>创建任务</Button>
                 </div>
-                <Table columns={this.columns} dataSource={dataSource} rowKey='id' loading={loading}/>
+                <Spin spinning={this.state.loading} tip='加载中...' indicator={antIcon}>
+                    <Table columns={this.columns} dataSource={dataSource} rowKey='id'/>
+                </Spin>
                 <CreateA setVisible={this.setCreateVisible} visible={visible} selectedItem={selectedItem}/>
                 <EditA setVisible={this.setEditVisible} visible={visible} selectedItem={selectedItem}/>
             </div>
@@ -86,7 +76,9 @@ class BatchProcess extends React.Component{
         this.setCreateVisible(true);
     };
     fetchFileAList = () => {
-        store.setLoading(true)
+        this.setState({
+            loading:true
+        });
         request({
             url: '/api/get_flow_list',
             data: {
@@ -99,7 +91,9 @@ class BatchProcess extends React.Component{
                 this.warning(res);
             },
             complete: () => {
-                store.setLoading(false)
+                this.setState({
+                    loading:false
+                });
             }
         })
     };
@@ -109,7 +103,7 @@ class BatchProcess extends React.Component{
             content: res.msg
         })
     }
-    handQuery = ()=>{
+    handQuery = (val)=>{
         let {form} = this.props;
         let {getFieldsValue} = form;
         let values = getFieldsValue();
@@ -117,7 +111,7 @@ class BatchProcess extends React.Component{
         request({
             url: '/api/get_flow_list',
             data: {
-                keyword: keyword,
+                keyword: val,
             },
             success: ({table}) => {
                 store.setFileAList(table);
