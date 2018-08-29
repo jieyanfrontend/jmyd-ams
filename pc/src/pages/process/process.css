@@ -4,3 +4,6 @@
 .select{
     width: 130px !important;
 }
+:global(.ant-select-dropdown){
+    z-index: 1000;
+}

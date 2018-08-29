@@ -5,6 +5,7 @@ module.exports = initConfig(
     htmlOption: {
       favicon: './favicon.ico',
     },
+    env: process.env.NODE_ENV
   },
   config => {
     return Object.assign({}, config, {
