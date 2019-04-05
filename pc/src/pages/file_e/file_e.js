@@ -206,7 +206,8 @@ class CreateFileE extends Component {
     let values = getFieldsValue();
     let { file, operation_time } = values;
     console.log(file);
-    // let { fileList } = file;
+    let { fileList } = file;
+    let all_files = fileList.map( v=> v.originFileObj);
     operation_time = operation_time.format('YYYYMMDD');
     console.log(operation_time);
     store.changeBtn(true);
@@ -220,7 +221,7 @@ class CreateFileE extends Component {
                   data: {
                       id,
                       operation_time,
-                      file: file.fileList,
+                      file: all_files,
                   },
                   postType: 'formdata',
                   success: res => {
@@ -229,7 +230,7 @@ class CreateFileE extends Component {
                       this.fetchProcessList();
                   },
                   fail: res => {
-                      message.error(res.msg);
+                      // message.error(res.msg);
                       this.props.store.setCreateVisible(false);
                   },
                   complete: () => {

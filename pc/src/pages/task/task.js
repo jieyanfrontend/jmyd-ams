@@ -181,7 +181,7 @@ class Task extends Component{
     }
     componentDidMount(){
         this.fetchTaskList();
-        this.fetchTypeList();
+        // this.fetchTypeList();
     }
     componentWillMount(){
         clearInterval(this.timer);
@@ -211,7 +211,7 @@ class Task extends Component{
     fetchTaskList = () => {
         let that = this;
         this.setState({
-            loading: true
+            // loading: true
         });
         request({
             url: '/api/get_task_list',
@@ -231,7 +231,7 @@ class Task extends Component{
             },
             complete: () => {
                 this.setState({
-                    loading: false
+                    // loading: false
                 })
             }
         })

@@ -29,7 +29,7 @@ class CreateFileB extends Component {
     console.log(e);
   };
   state = {
-      checkedValue:2
+    checkedValue: 2
   };
   allTypes = {
     批开停开机: {
@@ -76,7 +76,7 @@ class CreateFileB extends Component {
       },
     },
     批量密码重置: {
-        operation_type: 2,
+      operation_type: 2,
       dataSource: [
         {
           order: '1',
@@ -119,7 +119,7 @@ class CreateFileB extends Component {
       },
     },
     批量主题产品转换: {
-        operation_type: 3,
+      operation_type: 3,
       dataSource: [
         {
           order: '1',
@@ -162,7 +162,7 @@ class CreateFileB extends Component {
       },
     },
     批量HLR重置业务: {
-        operation_type: 4,
+      operation_type: 4,
       dataSource: [
         {
           order: '1',
@@ -205,7 +205,7 @@ class CreateFileB extends Component {
       },
     },
     批量实名登记: {
-        operation_type: 5,
+      operation_type: 5,
       dataSource: [
         {
           order: '1',
@@ -308,7 +308,7 @@ class CreateFileB extends Component {
       },
     },
     批量更改客户资料: {
-        operation_type: 6,
+      operation_type: 6,
       dataSource: [
         {
           order: '1',
@@ -411,7 +411,7 @@ class CreateFileB extends Component {
       },
     },
     批量订单回退: {
-        operation_type: 7,
+      operation_type: 7,
       dataSource: [
         {
           order: 1,
@@ -423,7 +423,7 @@ class CreateFileB extends Component {
               <div>
                 {getFieldDecorator('word1', {
                   initialValue: '',
-                })(<span>按A类文件“订单编号”</span>)}
+                })(<span>按A类文件“电话号码”</span>)}
               </div>
             );
           },
@@ -438,30 +438,30 @@ class CreateFileB extends Component {
             let values = getFieldsValue();
             console.log(values);
             return (
-                <div>
-                    {getFieldDecorator('word2', {
-                        initialValue:'余额不足',
-                        valuePropName: 'defaultValue',
-                    })(
-                        <RadioGroup name="content" >
-                            <Radio value={'余额不足'}>余额不足</Radio>
-                            <Radio value={2}>
-                                其他
+              <div>
+                {getFieldDecorator('word2', {
+                  initialValue: '余额不足',
+                  valuePropName: 'defaultValue',
+                })(
+                  <RadioGroup name="content" >
+                    <Radio value={'余额不足'}>余额不足</Radio>
+                    <Radio value={2}>
+                      其他
                                 {
-                                    values.word2 === 2 ? <Input
-                                        placeholder="其他"
-                                        style={{ width: 85 , marginLeft:'10px'}}
-                                        onChange={e => {
-                                            store.setInputValue({
-                                                word2Input:e.target.value
-                                            });
-                                        }}
-                                    /> : null
-                                }
-                            </Radio>
-                        </RadioGroup>
-                    )}
-                </div>
+                        values.word2 === 2 ? <Input
+                          placeholder="其他"
+                          style={{ width: 85, marginLeft: '10px' }}
+                          onChange={e => {
+                            store.setInputValue({
+                              word2Input: e.target.value
+                            });
+                          }}
+                        /> : null
+                      }
+                    </Radio>
+                  </RadioGroup>
+                )}
+              </div>
             );
           },
         },
@@ -491,7 +491,7 @@ class CreateFileB extends Component {
       },
     },
     批量产品订购退订与变更: {
-        operation_type: 8,
+      operation_type: 8,
       dataSource: [
         {
           order: 1,
@@ -518,20 +518,20 @@ class CreateFileB extends Component {
             return (
               <div>
                 {getFieldDecorator('word2', {
-                    valuePropName: 'defaultValue',
-                    initialValue:'优惠已到期'
+                  valuePropName: 'defaultValue',
+                  initialValue: '优惠已到期'
                 })(
                   <RadioGroup name="批量产品订购退订与变更">
                     <Radio value="优惠已到期">优惠已到期</Radio>
                     <Radio value={2}>
-                        其他
+                      其他
                         {
-                            this.props.form.getFieldsValue().word2 === 2 ? <Input
-                                placeholder="其他"
-                                style={{ width: 85 }}
-                                onInput={e => store.setInputValue({word2Input: e.target.value})}
-                            />:null
-                        }
+                        this.props.form.getFieldsValue().word2 === 2 ? <Input
+                          placeholder="其他"
+                          style={{ width: 85 }}
+                          onInput={e => store.setInputValue({ word2Input: e.target.value })}
+                        /> : null
+                      }
                     </Radio>
                   </RadioGroup>
                 )}
@@ -565,7 +565,7 @@ class CreateFileB extends Component {
       },
     },
     批量密码重置_指定密码: {
-        operation_type: 9,
+      operation_type: 9,
       dataSource: [
         {
           order: 1,
@@ -575,7 +575,7 @@ class CreateFileB extends Component {
             let { getFieldDecorator } = this.props.form;
             return (
               <div>
-                {getFieldDecorator('word', {
+                {getFieldDecorator('word1', {
                   initialValue: '',
                 })(<span>按A类文件“电话号码”</span>)}
               </div>
@@ -593,7 +593,7 @@ class CreateFileB extends Component {
                 {getFieldDecorator('word2', {
                   initialValue: '000000',
                 })(<Input
-                    onChange={e => store.setInputValue({word2Input: e.target.value})}
+                  onChange={e => store.setInputValue({ word2Input: e.target.value })}
                 />)}
               </div>
             );
@@ -625,7 +625,7 @@ class CreateFileB extends Component {
       },
     },
     批量产品订购退订: {
-        operation_type: 10,
+      operation_type: 10,
       dataSource: [
         {
           order: 1,
@@ -667,19 +667,19 @@ class CreateFileB extends Component {
             return (
               <div>
                 {getFieldDecorator('word3', {
-                    valuePropName:'defaultValue',
-                    initialValue:'0'
+                  valuePropName: 'defaultValue',
+                  initialValue: '0'
                 })(
                   <RadioGroup name="生效方式/代码">
                     <Radio value="0">0</Radio>
                     <Radio value={3}>其他
                         {
-                            this.props.form.getFieldsValue().word3 === 3 ? <Input
-                                placeholder="其他"
-                                style={{ width: 85 }}
-                                onInput={e => store.setInputValue({word3Input: e.target.value})}
-                            />: null
-                        }
+                        this.props.form.getFieldsValue().word3 === 3 ? <Input
+                          placeholder="其他"
+                          style={{ width: 85 }}
+                          onInput={e => store.setInputValue({ word3Input: e.target.value })}
+                        /> : null
+                      }
                     </Radio>
                   </RadioGroup>
                 )}
@@ -697,20 +697,20 @@ class CreateFileB extends Component {
             return (
               <div>
                 {getFieldDecorator('word4', {
-                    valuePropName:'defaultValue',
-                    initialValue:'N'
+                  valuePropName: 'defaultValue',
+                  initialValue: 'N'
                 })(
                   <RadioGroup name="操作类型代码" >
                     <Radio value={"N"}>N</Radio>
                     <Radio value={4}>
-                        其他
+                      其他
                         {
-                            this.props.form.getFieldsValue().word4 === 4 ? <Input
-                                placeholder="其他"
-                                style={{ width: 85 }}
-                                onInput={e => store.setInputValue({word4Input: e.target.value})}
-                            />: null
-                        }
+                        this.props.form.getFieldsValue().word4 === 4 ? <Input
+                          placeholder="其他"
+                          style={{ width: 85 }}
+                          onInput={e => store.setInputValue({ word4Input: e.target.value })}
+                        /> : null
+                      }
                     </Radio>
                   </RadioGroup>
                 )}
@@ -729,7 +729,7 @@ class CreateFileB extends Component {
                 {getFieldDecorator('word5', {
                   initialValue: '',
                 })(<TextArea row={2}
-                             onChange={e => store.setInputValue({word5Input: e.target.value})}
+                  onChange={e => store.setInputValue({ word5Input: e.target.value })}
                 />)}
               </div>
             );
@@ -756,11 +756,11 @@ class CreateFileB extends Component {
                     </Radio>
                   </RadioGroup>
                 )}*/}
-                  {getFieldDecorator('word6', {
-                      initialValue: '',
-                  })(<Input
-                      onChange={e => store.setInputValue({word6Input: e.target.value})}
-                  />)}
+                {getFieldDecorator('word6', {
+                  initialValue: '',
+                })(<Input
+                  onChange={e => store.setInputValue({ word6Input: e.target.value })}
+                />)}
               </div>
             );
           },
@@ -792,7 +792,7 @@ class CreateFileB extends Component {
       },
     },
     批量多层产品订购退订: {
-        operation_type: 11,
+      operation_type: 11,
       dataSource: [
         {
           order: 1,
@@ -820,9 +820,9 @@ class CreateFileB extends Component {
                 {getFieldDecorator('word2', {
                   initialValue: '',
                 })(<Input
-                    placeholder="id"
-                    style={{ width: 85 }}
-                    onInput={e => store.setInputValue({word2Input: e.target.value})}
+                  placeholder="id"
+                  style={{ width: 85 }}
+                  onInput={e => store.setInputValue({ word2Input: e.target.value })}
                 />)}
               </div>
             );
@@ -856,20 +856,20 @@ class CreateFileB extends Component {
             return (
               <div>
                 {getFieldDecorator('word4', {
-                    valuePropName:'defaultValue',
-                    initialValue:'cash'
+                  valuePropName: 'defaultValue',
+                  initialValue: 'cash'
                 })(
                   <RadioGroup name="缴费方式">
                     <Radio value="cash">cash</Radio>
                     <Radio value={4}>
-                        其他
+                      其他
                         {
-                            this.props.form.getFieldsValue().word4 === 4 ? <Input
-                                placeholder="其他"
-                                style={{ width: 85 }}
-                                onInput={e => store.setInputValue({word4Input: e.target.value})}
-                            />: null
-                        }
+                        this.props.form.getFieldsValue().word4 === 4 ? <Input
+                          placeholder="其他"
+                          style={{ width: 85 }}
+                          onInput={e => store.setInputValue({ word4Input: e.target.value })}
+                        /> : null
+                      }
                     </Radio>
                   </RadioGroup>
                 )}
@@ -888,7 +888,7 @@ class CreateFileB extends Component {
                 {getFieldDecorator('word5', {
                   initialValue: '',
                 })(<Input
-                    onChange={e => store.setInputValue({word5Input: e.target.value})}
+                  onChange={e => store.setInputValue({ word5Input: e.target.value })}
                 />)}
               </div>
             );
@@ -904,10 +904,10 @@ class CreateFileB extends Component {
             return (
               <div>
                 {getFieldDecorator('word6', {})(
-                      <Input
-                        style={{ width: 85 }}
-                        onChange={e => store.setInputValue({word6Input: e.target.value})}
-                      />
+                  <Input
+                    style={{ width: 85 }}
+                    onChange={e => store.setInputValue({ word6Input: e.target.value })}
+                  />
                 )}
               </div>
             );
@@ -924,7 +924,7 @@ class CreateFileB extends Component {
                 {getFieldDecorator('word7', {
                   initialValue: '',
                 })(<Input
-                    onChange={e => store.setInputValue({word7Input: e.target.value})}
+                  onChange={e => store.setInputValue({ word7Input: e.target.value })}
                 />)}
               </div>
             );
@@ -941,7 +941,7 @@ class CreateFileB extends Component {
                 {getFieldDecorator('word8', {
                   initialValue: '',
                 })(<Input
-                    onChange={e => store.setInputValue({word8Input: e.target.value})}
+                  onChange={e => store.setInputValue({ word8Input: e.target.value })}
                 />)}
               </div>
             );
@@ -958,7 +958,7 @@ class CreateFileB extends Component {
                 {getFieldDecorator('word9', {
                   initialValue: '',
                 })(<TextArea row={2}
-                             onChange={e => store.setInputValue({word9Input: e.target.value})}
+                  onChange={e => store.setInputValue({ word9Input: e.target.value })}
                 />)}
               </div>
             );
@@ -990,7 +990,7 @@ class CreateFileB extends Component {
       },
     },
     批量账户变更: {
-        operation_type: 12,
+      operation_type: 12,
       dataSource: [
         {
           order: 1,
@@ -1018,9 +1018,9 @@ class CreateFileB extends Component {
                 {getFieldDecorator('word2', {
                   initialValue: '',
                 })(<Input
-                    placeholder="id"
-                    style={{ width: 85 }}
-                    onInput={e => store.setInputValue({word2Input: e.target.value})}
+                  placeholder="id"
+                  style={{ width: 85 }}
+                  onInput={e => store.setInputValue({ word2Input: e.target.value })}
                 />)}
               </div>
             );
@@ -1051,11 +1051,11 @@ class CreateFileB extends Component {
             return (
               <div>
                 {getFieldDecorator('word4', {
-                    initialValue:''
+                  initialValue: ''
                 })(
-                 <Input
-                     onChange={e => store.setInputValue({word4Input: e.target.value})}
-                 />
+                  <Input
+                    onChange={e => store.setInputValue({ word4Input: e.target.value })}
+                  />
                 )}
               </div>
             );
@@ -1072,7 +1072,7 @@ class CreateFileB extends Component {
                 {getFieldDecorator('word5', {
                   initialValue: '',
                 })(<Input
-                    onChange={e => store.setInputValue({word5Input: e.target.value})}
+                  onChange={e => store.setInputValue({ word5Input: e.target.value })}
                 />)}
               </div>
             );
@@ -1086,13 +1086,13 @@ class CreateFileB extends Component {
             let { getFieldDecorator } = this.props.form;
             let { inputValue } = store;
             return (
-                <div>
-                    {getFieldDecorator('word6', {
-                        initialValue: '',
-                    })(<Input
-                        onChange={e => store.setInputValue({word6Input: e.target.value})}
-                    />)}
-                </div>
+              <div>
+                {getFieldDecorator('word6', {
+                  initialValue: '',
+                })(<Input
+                  onChange={e => store.setInputValue({ word6Input: e.target.value })}
+                />)}
+              </div>
             );
           },
         },
@@ -1150,8 +1150,8 @@ class CreateFileB extends Component {
                 {getFieldDecorator('word2', {
                   initialValue: '',
                 })(<Input
-                    style={{ width: 85 }}
-                    onInput={e => store.setInputValue({word2Input: e.target.value})}
+                  style={{ width: 85 }}
+                  onInput={e => store.setInputValue({ word2Input: e.target.value })}
                 />)}
               </div>
             );
@@ -1168,8 +1168,8 @@ class CreateFileB extends Component {
                 {getFieldDecorator('word3', {
                   initialValue: '',
                 })(<Input
-                    style={{ width: 85 }}
-                    onInput={e => store.setInputValue({word3Input: e.target.value})}
+                  style={{ width: 85 }}
+                  onInput={e => store.setInputValue({ word3Input: e.target.value })}
                 />)}
               </div>
             );
@@ -1185,9 +1185,9 @@ class CreateFileB extends Component {
             return (
               <div>
                 {getFieldDecorator('word4', {
-                    initialValue:''
+                  initialValue: ''
                 })(
-                 <span>按A类文件含金额字段</span>
+                  <span>按A类文件含金额字段</span>
                 )}
               </div>
             );
@@ -1204,7 +1204,7 @@ class CreateFileB extends Component {
                 {getFieldDecorator('word5', {
                   initialValue: '',
                 })(<Input
-                    onChange={e => store.setInputValue({word5Input: e.target.value})}
+                  onChange={e => store.setInputValue({ word5Input: e.target.value })}
                 />)}
               </div>
             );
@@ -1218,13 +1218,13 @@ class CreateFileB extends Component {
             let { getFieldDecorator } = this.props.form;
             let { inputValue } = store;
             return (
-                <div>
-                    {getFieldDecorator('word6', {
-                        initialValue: '',
-                    })(<TextArea row={2}
-                                 onChange={e => store.setInputValue({word6Input: e.target.value})}
-                    />)}
-                </div>
+              <div>
+                {getFieldDecorator('word6', {
+                  initialValue: '',
+                })(<TextArea row={2}
+                  onChange={e => store.setInputValue({ word6Input: e.target.value })}
+                />)}
+              </div>
             );
           },
         },
@@ -1253,11 +1253,97 @@ class CreateFileB extends Component {
         output: '13702249646|20150200|3|-10|1|测试积分批量调整方案|',
       },
     },
+    批量APP卡券: {
+      operation_type: 14,
+      dataSource: [
+        {
+          order: 1,
+          field: '电话号码',
+          input_format: '电话号码',
+          output_format: () => {
+            let { getFieldDecorator } = this.props.form;
+            return (
+              <div>
+                {getFieldDecorator('word1', {
+                  initialValue: '',
+                })(<span>按A类文件“电话号码”</span>)}
+              </div>
+            );
+          },
+        },
+      ],
+      columns: [
+        {
+          title: '序号',
+          dataIndex: 'order',
+        },
+        {
+          title: '字段',
+          dataIndex: 'field',
+        },
+        {
+          title: 'A类文件输入格式',
+          dataIndex: 'input_format',
+        },
+        {
+          title: '输出格式',
+          dataIndex: 'output_format',
+          render: Comp => <Comp />,
+        },
+      ],
+      example: {
+        input: '13912345678',
+        output: '13912345678',
+      },
+    },
+    批量流量汇: {
+      operation_type: 15,
+      dataSource: [
+        {
+          order: 1,
+          field: '电话号码',
+          input_format: '电话号码',
+          output_format: () => {
+            let { getFieldDecorator } = this.props.form;
+            return (
+              <div>
+                {getFieldDecorator('word1', {
+                  initialValue: '',
+                })(<span>按A类文件“电话号码”</span>)}
+              </div>
+            );
+          },
+        },
+      ],
+      columns: [
+        {
+          title: '序号',
+          dataIndex: 'order',
+        },
+        {
+          title: '字段',
+          dataIndex: 'field',
+        },
+        {
+          title: 'A类文件输入格式',
+          dataIndex: 'input_format',
+        },
+        {
+          title: '输出格式',
+          dataIndex: 'output_format',
+          render: Comp => <Comp />,
+        },
+      ],
+      example: {
+        input: '13912345678',
+        output: '13912345678',
+      },
+    },
   };
   render() {
     let { visible, setVisible, wf_id, form, } = this.props;
     let allTypes = this.allTypes;
-    let { getFieldDecorator, getFieldsValue, getFieldValue,getFieldError, getFieldsError } = form;
+    let { getFieldDecorator, getFieldsValue, getFieldValue, getFieldError, getFieldsError } = form;
     let fileBVisible = visible.file_b;
     let { type, isDisabledBtn } = store;
     let { dataSource, columns, example = {} } = allTypes[type];
@@ -1277,13 +1363,17 @@ class CreateFileB extends Component {
         onCancel={() => setVisible(false)}
         width={800}
         destroyOnClose={true}>
-          <Spin spinning={store.loading} indicator={antIcon}>
-            <Form>
+        <Spin spinning={store.loading} indicator={antIcon}>
+          <Form>
             <Form.Item label="效率100编号" {...formProps}>
               <Input disabled={true} defaultValue={wf_id} />
             </Form.Item>
             <Form.Item label="操作类型" {...formProps}>
-              <Select defaultValue={type} onChange={this.changeSelectType}>
+              <Select defaultValue={type}
+                onChange={this.changeSelectType}
+                dropdownStyle={{
+                  zIndex: 1000
+                }}>
                 {Object.keys(allTypes).map(type => (
                   <Option value={type} key={type}>
                     {type}
@@ -1307,59 +1397,62 @@ class CreateFileB extends Component {
   }
   changeSelectType = value => {
     store.changeType(value);
+    store.word2Input = '';
+    store.word3Input = '';
+    store.word4Input = '';
   };
   createB = () => {
     let { getFieldsValue, getFieldsError } = this.props.form;
     let canCreate = !hasErrors(getFieldsError());
     let allTypes = this.allTypes;
     if (canCreate) {
-          let values = getFieldsValue();
-          let {word1,word2,word3,word4,word5,word6,word7,word8,word9,} = values;
-          let {inputValue} = store;
-          let {word1Input,word2Input,word3Input,word4Input,word5Input,word6Input,word7Input,word8Input,word9Input} = inputValue;
-          let type = store.type;
-          let operation_type = allTypes[type].operation_type;
-          let{dataSource} = allTypes[type];
-          let id = this.props.id;
-          let that = this;
-          store.setLoading(true);
-          store.changeBtn(true);
-          request({
-              url: '/api/create_file_b',
-              data: {
-                  operation_type,
-                  id,
-                  word1: word1?word1:"",
-                  word2: word2 === 2 ? word2Input : word2,
-                  word3: word3 === 3 ? word3Input : word3,
-                  word4: word4 === 4 ? word4Input : word4,
-                  word5: word5?word5:"",
-                  word6: word6?word6:"",
-                  word7: word7?word7:"",
-                  word8: word8?word8:"",
-                  word9: word9?word9:"",
-              },
-              // postType: 'formdata',
-              success: res => {
-                  this.props.setVisible(false);
-                  messageSuccess(res);
-                  that.fetchProcessList();
-              },
-              fail: res => {
-                  // this.warning(res);
-                  this.props.setVisible(false);
-              },
-              complete: () => {
-                  this.props.setVisible(false);
-                  store.changeBtn(false);
-                  store.setLoading(false);
-                  that.fetchProcessList();
-                  store.changeType('批开停开机');
-              }
-          });
-      }else {
-          // this.warning(warnAlert);
-      }
+      let values = getFieldsValue();
+      let { word1, word2, word3, word4, word5, word6, word7, word8, word9, } = values;
+      let { inputValue } = store;
+      let { word1Input, word2Input, word3Input, word4Input, word5Input, word6Input, word7Input, word8Input, word9Input } = inputValue;
+      let type = store.type;
+      let operation_type = allTypes[type].operation_type;
+      let { dataSource } = allTypes[type];
+      let id = this.props.id;
+      let that = this;
+      store.setLoading(true);
+      store.changeBtn(true);
+      request({
+        url: '/api/create_file_b',
+        data: {
+          operation_type,
+          id,
+          word1: word1 ? word1 : "",
+          word2: word2 === 2 ? word2Input : word2,
+          word3: word3 === 3 ? word3Input : word3,
+          word4: word4 === 4 ? word4Input : word4,
+          word5: word5 ? word5 : "",
+          word6: word6 ? word6 : "",
+          word7: word7 ? word7 : "",
+          word8: word8 ? word8 : "",
+          word9: word9 ? word9 : "",
+        },
+        // postType: 'formdata',
+        success: res => {
+          this.props.setVisible(false);
+          messageSuccess(res);
+          that.fetchProcessList();
+        },
+        fail: res => {
+          // this.warning(res);
+          this.props.setVisible(false);
+        },
+        complete: () => {
+          this.props.setVisible(false);
+          store.changeBtn(false);
+          store.setLoading(false);
+          that.fetchProcessList();
+          store.changeType('批开停开机');
+        }
+      });
+    } else {
+      // this.warning(warnAlert);
+    }
   };
   fetchProcessList = () => {
     request({
@@ -1375,16 +1468,16 @@ class CreateFileB extends Component {
     });
   };
   warning = (res) => {
-        Modal.warning({
-            title:'警告',
-            content: res.msg
-        })
-    };
+    Modal.warning({
+      title: '警告',
+      content: res.msg
+    })
+  };
   openNotification = (type) => {
     notification[type]({
-        message:'操作提示',
-        description:'已存在该类文件，请确认无误后操作'
+      message: '操作提示',
+      description: '已存在该类文件，请确认无误后操作'
     })
-}
+  }
 }
 export default Form.create()(CreateFileB);

@@ -64,12 +64,6 @@ class Login extends React.Component{
     componentDidMount(){
         this.props.form.validateFields();
     }
-    warning = (res) => {
-        Modal.warning({
-            title:'警告',
-            content: res.msg
-        })
-    };
     handleRequest = ({userName, password}) => {
         this.setState({
             loading:true
@@ -88,8 +82,6 @@ class Login extends React.Component{
                   })
               },
               fail: res => {
-                  console.log('fail');
-                  this.warning(res);
               },
             complete: () => {
                 this.setState({

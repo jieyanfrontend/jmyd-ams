@@ -77,11 +77,10 @@ class Process extends React.Component{
     render(){
         let {visible, list, process_list, selectedItem, loading} = store;
         let { file_types } = list;
-        console.log(file_types)
-        // let dataSource = Array.from(process_list);
         let dataSource = process_list.slice();
         let { getFieldDecorator } = this.props.form;
         let { match } = this.props;
+        console.log(match);
         let bool = match && match.params.id && match.params.wf_id;
         if(!bool)return null;
         let SelectBar = () => (
@@ -129,8 +128,8 @@ class Process extends React.Component{
                     <Button type="primary">返回</Button>
                 </a>
                 <SelectBar />
-                <Spin spinning={this.state.loading} tip='登陆中...' indicator={antIcon}>
-                    <Table dataSource={dataSource} columns={this.columns} rowKey='file_id'/>
+                <Spin spinning={this.state.loading} tip='加载中...' indicator={antIcon}>
+                    <Table pagination={{ showSizeChanger: true, hideOnSinglePage: false, defaultPageSize: 20, pageSizeOptions: ['20', '50', '100', '200'] }} dataSource={dataSource} columns={this.columns} rowKey='file_id'/>
                 </Spin>
                 <EditB setVisible={this.setEditVisible} visible={visible} selectedItem={selectedItem} id={this.props.match.params.id}/>
                 <PartitionFileB setVisible={this.setPartitionVisible} visible={visible} dataSource={dataSource} wf_id={this.props.match.params.wf_id} id={this.props.match.params.id}/>
@@ -149,7 +148,7 @@ class Process extends React.Component{
         console.log(this.canCreateFile(2));
         console.log(this.canCreateFile(3));
         console.log(this.canCreateFile(5));
-    }
+    };
     canCreateFile = (num) => {
         let { file_types } = store.list;
         return file_types.indexOf(num) !== -1;
@@ -233,17 +232,11 @@ class Process extends React.Component{
         store.setVisible({
             file_c: bool
         });
-        // this.setState({
-        //     myCKey: Math.random()
-        // })
+
     };
     setFileEVisible = (bool) =>{
         store.setVisible({
-            file_e: bool
-        });
-        // this.setState({
-        //     myEKey: Math.random()
-        // })
+            file_e: bool})
     };
     patitionFileB = () =>{
         store.setVisible({
@@ -265,7 +258,7 @@ class Process extends React.Component{
             if(v.file_name.indexOf("B类对比文件") !== -1){
                 return canCreateFile = false;
             }
-            })
+            });
         if(!canCreateFile){
             this.openModalAutoDestroy()
         }
@@ -322,7 +315,7 @@ class Process extends React.Component{
                 store.setProcessList(table);
             }
         })
-    }
+    };
     exportFileA = (file_id)=>{
         let{match} = this.props;
         let {params} = match;

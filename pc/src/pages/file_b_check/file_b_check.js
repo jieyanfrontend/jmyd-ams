@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Modal, Form, Input, Select, Table, Radio, Button, Spin, Icon, Upload, notification} from 'antd';
+import { Modal, Form, Input, Select, Table, Radio, Button, Spin, Icon, Upload, notification } from 'antd';
 import { observer } from 'mobx-react';
 import store from './store';
 import store2 from '../process/store';
@@ -28,7 +28,7 @@ class CreateFileBCheck extends Component {
         fileList: []
     };
     uploadProps = {
-        onChange: ({fileList}) => {
+        onChange: ({ fileList }) => {
             this.setState({
                 fileList
             })
@@ -440,7 +440,7 @@ class CreateFileBCheck extends Component {
                             <div>
                                 {getFieldDecorator('word1', {
                                     initialValue: '',
-                                })(<span>按A类文件“订单编号”</span>)}
+                                })(<span>按A类文件“电话号码”</span>)}
                             </div>
                         );
                     },
@@ -457,7 +457,7 @@ class CreateFileBCheck extends Component {
                         return (
                             <div>
                                 {getFieldDecorator('word2', {
-                                    initialValue:'余额不足',
+                                    initialValue: '余额不足',
                                     valuePropName: 'defaultValue',
                                 })(
                                     <RadioGroup name="content" >
@@ -467,10 +467,10 @@ class CreateFileBCheck extends Component {
                                             {
                                                 values.word2 === 2 ? <Input
                                                     placeholder="其他"
-                                                    style={{ width: 85 , marginLeft:'10px'}}
+                                                    style={{ width: 85, marginLeft: '10px' }}
                                                     onChange={e => {
                                                         store.setInputValue({
-                                                            word2Input:e.target.value
+                                                            word2Input: e.target.value
                                                         });
                                                     }}
                                                 /> : null
@@ -536,7 +536,7 @@ class CreateFileBCheck extends Component {
                             <div>
                                 {getFieldDecorator('word2', {
                                     valuePropName: 'defaultValue',
-                                    initialValue:'优惠已到期'
+                                    initialValue: '优惠已到期'
                                 })(
                                     <RadioGroup name="批量产品订购退订与变更">
                                         <Radio value="优惠已到期">优惠已到期</Radio>
@@ -546,8 +546,8 @@ class CreateFileBCheck extends Component {
                                                 this.props.form.getFieldsValue().word2 === 2 ? <Input
                                                     placeholder="其他"
                                                     style={{ width: 85 }}
-                                                    onInput={e => store.setInputValue({word2Input: e.target.value})}
-                                                />:null
+                                                    onInput={e => store.setInputValue({ word2Input: e.target.value })}
+                                                /> : null
                                             }
                                         </Radio>
                                     </RadioGroup>
@@ -592,7 +592,7 @@ class CreateFileBCheck extends Component {
                         let { getFieldDecorator } = this.props.form;
                         return (
                             <div>
-                                {getFieldDecorator('word', {
+                                {getFieldDecorator('word1', {
                                     initialValue: '',
                                 })(<span>按A类文件“电话号码”</span>)}
                             </div>
@@ -610,7 +610,7 @@ class CreateFileBCheck extends Component {
                                 {getFieldDecorator('word2', {
                                     initialValue: '000000',
                                 })(<Input
-                                    onChange={e => store.setInputValue({word2Input: e.target.value})}
+                                    onChange={e => store.setInputValue({ word2Input: e.target.value })}
                                 />)}
                             </div>
                         );
@@ -684,8 +684,8 @@ class CreateFileBCheck extends Component {
                         return (
                             <div>
                                 {getFieldDecorator('word3', {
-                                    valuePropName:'defaultValue',
-                                    initialValue:'0'
+                                    valuePropName: 'defaultValue',
+                                    initialValue: '0'
                                 })(
                                     <RadioGroup name="生效方式/代码">
                                         <Radio value="0">0</Radio>
@@ -694,8 +694,8 @@ class CreateFileBCheck extends Component {
                                                 this.props.form.getFieldsValue().word3 === 3 ? <Input
                                                     placeholder="其他"
                                                     style={{ width: 85 }}
-                                                    onInput={e => store.setInputValue({word3Input: e.target.value})}
-                                                />: null
+                                                    onInput={e => store.setInputValue({ word3Input: e.target.value })}
+                                                /> : null
                                             }
                                         </Radio>
                                     </RadioGroup>
@@ -714,8 +714,8 @@ class CreateFileBCheck extends Component {
                         return (
                             <div>
                                 {getFieldDecorator('word4', {
-                                    valuePropName:'defaultValue',
-                                    initialValue:'N'
+                                    valuePropName: 'defaultValue',
+                                    initialValue: 'N'
                                 })(
                                     <RadioGroup name="操作类型代码" >
                                         <Radio value={"N"}>N</Radio>
@@ -725,8 +725,8 @@ class CreateFileBCheck extends Component {
                                                 this.props.form.getFieldsValue().word4 === 4 ? <Input
                                                     placeholder="其他"
                                                     style={{ width: 85 }}
-                                                    onInput={e => store.setInputValue({word4Input: e.target.value})}
-                                                />: null
+                                                    onInput={e => store.setInputValue({ word4Input: e.target.value })}
+                                                /> : null
                                             }
                                         </Radio>
                                     </RadioGroup>
@@ -746,7 +746,7 @@ class CreateFileBCheck extends Component {
                                 {getFieldDecorator('word5', {
                                     initialValue: '',
                                 })(<TextArea row={2}
-                                             onChange={e => store.setInputValue({word5Input: e.target.value})}
+                                    onChange={e => store.setInputValue({ word5Input: e.target.value })}
                                 />)}
                             </div>
                         );
@@ -776,7 +776,7 @@ class CreateFileBCheck extends Component {
                                 {getFieldDecorator('word6', {
                                     initialValue: '',
                                 })(<Input
-                                    onChange={e => store.setInputValue({word6Input: e.target.value})}
+                                    onChange={e => store.setInputValue({ word6Input: e.target.value })}
                                 />)}
                             </div>
                         );
@@ -839,7 +839,7 @@ class CreateFileBCheck extends Component {
                                 })(<Input
                                     placeholder="id"
                                     style={{ width: 85 }}
-                                    onInput={e => store.setInputValue({word2Input: e.target.value})}
+                                    onInput={e => store.setInputValue({ word2Input: e.target.value })}
                                 />)}
                             </div>
                         );
@@ -873,8 +873,8 @@ class CreateFileBCheck extends Component {
                         return (
                             <div>
                                 {getFieldDecorator('word4', {
-                                    valuePropName:'defaultValue',
-                                    initialValue:'cash'
+                                    valuePropName: 'defaultValue',
+                                    initialValue: 'cash'
                                 })(
                                     <RadioGroup name="缴费方式">
                                         <Radio value="cash">cash</Radio>
@@ -884,8 +884,8 @@ class CreateFileBCheck extends Component {
                                                 this.props.form.getFieldsValue().word4 === 4 ? <Input
                                                     placeholder="其他"
                                                     style={{ width: 85 }}
-                                                    onInput={e => store.setInputValue({word4Input: e.target.value})}
-                                                />: null
+                                                    onInput={e => store.setInputValue({ word4Input: e.target.value })}
+                                                /> : null
                                             }
                                         </Radio>
                                     </RadioGroup>
@@ -905,7 +905,7 @@ class CreateFileBCheck extends Component {
                                 {getFieldDecorator('word5', {
                                     initialValue: '',
                                 })(<Input
-                                    onChange={e => store.setInputValue({word5Input: e.target.value})}
+                                    onChange={e => store.setInputValue({ word5Input: e.target.value })}
                                 />)}
                             </div>
                         );
@@ -923,7 +923,7 @@ class CreateFileBCheck extends Component {
                                 {getFieldDecorator('word6', {})(
                                     <Input
                                         style={{ width: 85 }}
-                                        onChange={e => store.setInputValue({word6Input: e.target.value})}
+                                        onChange={e => store.setInputValue({ word6Input: e.target.value })}
                                     />
                                 )}
                             </div>
@@ -941,7 +941,7 @@ class CreateFileBCheck extends Component {
                                 {getFieldDecorator('word7', {
                                     initialValue: '',
                                 })(<Input
-                                    onChange={e => store.setInputValue({word7Input: e.target.value})}
+                                    onChange={e => store.setInputValue({ word7Input: e.target.value })}
                                 />)}
                             </div>
                         );
@@ -958,7 +958,7 @@ class CreateFileBCheck extends Component {
                                 {getFieldDecorator('word8', {
                                     initialValue: '',
                                 })(<Input
-                                    onChange={e => store.setInputValue({word8Input: e.target.value})}
+                                    onChange={e => store.setInputValue({ word8Input: e.target.value })}
                                 />)}
                             </div>
                         );
@@ -975,7 +975,7 @@ class CreateFileBCheck extends Component {
                                 {getFieldDecorator('word9', {
                                     initialValue: '',
                                 })(<TextArea row={2}
-                                             onChange={e => store.setInputValue({word9Input: e.target.value})}
+                                    onChange={e => store.setInputValue({ word9Input: e.target.value })}
                                 />)}
                             </div>
                         );
@@ -1037,7 +1037,7 @@ class CreateFileBCheck extends Component {
                                 })(<Input
                                     placeholder="id"
                                     style={{ width: 85 }}
-                                    onInput={e => store.setInputValue({word2Input: e.target.value})}
+                                    onInput={e => store.setInputValue({ word2Input: e.target.value })}
                                 />)}
                             </div>
                         );
@@ -1068,10 +1068,10 @@ class CreateFileBCheck extends Component {
                         return (
                             <div>
                                 {getFieldDecorator('word4', {
-                                    initialValue:''
+                                    initialValue: ''
                                 })(
                                     <Input
-                                        onChange={e => store.setInputValue({word4Input: e.target.value})}
+                                        onChange={e => store.setInputValue({ word4Input: e.target.value })}
                                     />
                                 )}
                             </div>
@@ -1089,7 +1089,7 @@ class CreateFileBCheck extends Component {
                                 {getFieldDecorator('word5', {
                                     initialValue: '',
                                 })(<Input
-                                    onChange={e => store.setInputValue({word5Input: e.target.value})}
+                                    onChange={e => store.setInputValue({ word5Input: e.target.value })}
                                 />)}
                             </div>
                         );
@@ -1107,7 +1107,7 @@ class CreateFileBCheck extends Component {
                                 {getFieldDecorator('word6', {
                                     initialValue: '',
                                 })(<Input
-                                    onChange={e => store.setInputValue({word6Input: e.target.value})}
+                                    onChange={e => store.setInputValue({ word6Input: e.target.value })}
                                 />)}
                             </div>
                         );
@@ -1168,7 +1168,7 @@ class CreateFileBCheck extends Component {
                                     initialValue: '',
                                 })(<Input
                                     style={{ width: 85 }}
-                                    onInput={e => store.setInputValue({word2Input: e.target.value})}
+                                    onInput={e => store.setInputValue({ word2Input: e.target.value })}
                                 />)}
                             </div>
                         );
@@ -1186,7 +1186,7 @@ class CreateFileBCheck extends Component {
                                     initialValue: '',
                                 })(<Input
                                     style={{ width: 85 }}
-                                    onInput={e => store.setInputValue({word3Input: e.target.value})}
+                                    onInput={e => store.setInputValue({ word3Input: e.target.value })}
                                 />)}
                             </div>
                         );
@@ -1202,7 +1202,7 @@ class CreateFileBCheck extends Component {
                         return (
                             <div>
                                 {getFieldDecorator('word4', {
-                                    initialValue:''
+                                    initialValue: ''
                                 })(
                                     <span>按A类文件含金额字段</span>
                                 )}
@@ -1221,7 +1221,7 @@ class CreateFileBCheck extends Component {
                                 {getFieldDecorator('word5', {
                                     initialValue: '',
                                 })(<Input
-                                    onChange={e => store.setInputValue({word5Input: e.target.value})}
+                                    onChange={e => store.setInputValue({ word5Input: e.target.value })}
                                 />)}
                             </div>
                         );
@@ -1239,7 +1239,7 @@ class CreateFileBCheck extends Component {
                                 {getFieldDecorator('word6', {
                                     initialValue: '',
                                 })(<TextArea row={2}
-                                             onChange={e => store.setInputValue({word6Input: e.target.value})}
+                                    onChange={e => store.setInputValue({ word6Input: e.target.value })}
                                 />)}
                             </div>
                         );
@@ -1270,12 +1270,98 @@ class CreateFileBCheck extends Component {
                 output: '13702249646|20150200|3|-10|1|测试积分批量调整方案|',
             },
         },
+        批量APP卡券: {
+            operation_type: 14,
+            dataSource: [
+                {
+                    order: 1,
+                    field: '电话号码',
+                    input_format: '电话号码',
+                    output_format: () => {
+                        let { getFieldDecorator } = this.props.form;
+                        return (
+                            <div>
+                                {getFieldDecorator('word1', {
+                                    initialValue: '',
+                                })(<span>按A类文件“电话号码”</span>)}
+                            </div>
+                        );
+                    },
+                },
+            ],
+            columns: [
+                {
+                    title: '序号',
+                    dataIndex: 'order',
+                },
+                {
+                    title: '字段',
+                    dataIndex: 'field',
+                },
+                {
+                    title: 'A类文件输入格式',
+                    dataIndex: 'input_format',
+                },
+                {
+                    title: '输出格式',
+                    dataIndex: 'output_format',
+                    render: Comp => <Comp />,
+                },
+            ],
+            example: {
+                input: '13912345678',
+                output: '13912345678',
+            },
+        },
+        批量流量汇: {
+            operation_type: 15,
+            dataSource: [
+                {
+                    order: 1,
+                    field: '电话号码',
+                    input_format: '电话号码',
+                    output_format: () => {
+                        let { getFieldDecorator } = this.props.form;
+                        return (
+                            <div>
+                                {getFieldDecorator('word1', {
+                                    initialValue: '',
+                                })(<span>按A类文件“电话号码”</span>)}
+                            </div>
+                        );
+                    },
+                },
+            ],
+            columns: [
+                {
+                    title: '序号',
+                    dataIndex: 'order',
+                },
+                {
+                    title: '字段',
+                    dataIndex: 'field',
+                },
+                {
+                    title: 'A类文件输入格式',
+                    dataIndex: 'input_format',
+                },
+                {
+                    title: '输出格式',
+                    dataIndex: 'output_format',
+                    render: Comp => <Comp />,
+                },
+            ],
+            example: {
+                input: '13912345678',
+                output: '13912345678',
+            },
+        },
     };
     render() {
         let { visible, setVisible, wf_id, form } = this.props;
-        let {fileList} = this.state;
+        let { fileList } = this.state;
         let allTypes = this.allTypes;
-        let { getFieldDecorator, getFieldsValue, getFieldValue,getFieldError, getFieldsError, isFieldTouched } = form;
+        let { getFieldDecorator, getFieldsValue, getFieldValue, getFieldError, getFieldsError, isFieldTouched } = form;
         let fileErr = isFieldTouched('file') && getFieldError('file');
         let fileBCheckVisible = visible.file_b_check;
         let { type, isDisabledBtn } = store;
@@ -1290,7 +1376,7 @@ class CreateFileBCheck extends Component {
         );
         return (
             <Modal
-                visible={ fileBCheckVisible }
+                visible={fileBCheckVisible}
                 title="创建B类比对文件"
                 footer={<ModalFooter />}
                 onCancel={() => this.closeModal()}
@@ -1305,21 +1391,21 @@ class CreateFileBCheck extends Component {
                             help={fileErr ? fileErr : ''}
                             validateStatus={fileErr ? 'error' : ''}
                             label='导入A类文件' {...commonFormProps}>{
-                            getFieldDecorator('file', {
-                                rules: [{
-                                    required: true,
-                                    message: '请选择文件导入'
-                                }]
-                            })(
-                                <Upload {...this.uploadProps} fileList={fileList}>
-                                    <Button>
-                                        <Icon type="upload"/>选择文件
+                                getFieldDecorator('file', {
+                                    rules: [{
+                                        required: true,
+                                        message: '请选择文件导入'
+                                    }]
+                                })(
+                                    <Upload {...this.uploadProps} fileList={fileList}>
+                                        <Button>
+                                            <Icon type="upload" />选择文件
                                     </Button>
-                                </Upload>
-                            )
-                        }</Form.Item>
+                                    </Upload>
+                                )
+                            }</Form.Item>
                         <Form.Item label="操作类型" {...formProps}>
-                            <Select defaultValue={type} onChange={this.changeSelectType}>
+                            <Select defaultValue={type} onChange={this.changeSelectType} dropdownStyle={{ zIndex: 1000 }}>
                                 {Object.keys(allTypes).map(type => (
                                     <Option value={type} key={type}>
                                         {type}
@@ -1343,22 +1429,25 @@ class CreateFileBCheck extends Component {
     }
     changeSelectType = value => {
         store.changeType(value);
+        store.word2Input = '';
+        store.word3Input = '';
+        store.word4Input = '';
     };
     createB = () => {
         let { getFieldsValue, getFieldsError } = this.props.form;
         let canCreate = !hasErrors(getFieldsError());
         let allTypes = this.allTypes;
         let values = getFieldsValue();
-        let {word1,word2,word3,word4,word5,word6,word7,word8,word9,file} = values;
-        let {inputValue} = store;
-        let {word1Input,word2Input,word3Input,word4Input,word5Input,word6Input,word7Input,word8Input,word9Input} = inputValue;
+        let { word1, word2, word3, word4, word5, word6, word7, word8, word9, file } = values;
+        let { inputValue } = store;
+        let { word1Input, word2Input, word3Input, word4Input, word5Input, word6Input, word7Input, word8Input, word9Input } = inputValue;
         let type = store.type;
         let operation_type = allTypes[type].operation_type;
-        let{dataSource} = allTypes[type];
+        let { dataSource } = allTypes[type];
         let id = this.props.id;
-        if(!file){
+        if (!file) {
             alert('请选择上传文件')
-        }else{
+        } else {
             if (canCreate && file !== undefined) {
                 let that = this;
                 store.setLoading(true);
@@ -1369,16 +1458,16 @@ class CreateFileBCheck extends Component {
                     data: {
                         operation_type,
                         id,
-                        file:file.file,
-                        word1: word1?word1:"",
+                        file: file.file,
+                        word1: word1 ? word1 : "",
                         word2: word2 === 2 ? word2Input : word2,
                         word3: word3 === 3 ? word3Input : word3,
                         word4: word4 === 4 ? word4Input : word4,
-                        word5: word5?word5:"",
-                        word6: word6?word6:"",
-                        word7: word7?word7:"",
-                        word8: word8?word8:"",
-                        word9: word9?word9:"",
+                        word5: word5 ? word5 : "",
+                        word6: word6 ? word6 : "",
+                        word7: word7 ? word7 : "",
+                        word8: word8 ? word8 : "",
+                        word9: word9 ? word9 : "",
                     },
                     postType: 'formdata',
                     success: res => {
@@ -1433,13 +1522,13 @@ class CreateFileBCheck extends Component {
     };
     openNotification = (type) => {
         notification[type]({
-            message:'操作提示',
-            description:'已存在该类文件，请确认无误后操作'
+            message: '操作提示',
+            description: '已存在该类文件，请确认无误后操作'
         })
     }
     warning = (res) => {
         Modal.warning({
-            title:'警告',
+            title: '警告',
             content: res.msg
         })
     }

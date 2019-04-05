@@ -55,6 +55,7 @@ class BatchProcess extends React.Component{
                 </Form.Item>
             </Form>
         );
+        console.log(this.props);
         return(
             <div className={'init-height'}>
                 <SelectBar />
@@ -62,7 +63,7 @@ class BatchProcess extends React.Component{
                     <Button type='primary' onClick={this.createA}>创建任务</Button>
                 </div>
                 <Spin spinning={this.state.loading} tip='加载中...' indicator={antIcon}>
-                    <Table columns={this.columns} dataSource={dataSource} rowKey='id'/>
+                    <Table pagination={{ showSizeChanger: true, hideOnSinglePage: false, defaultPageSize: 20, pageSizeOptions: ['20', '50', '100', '200'] }} columns={this.columns} dataSource={dataSource} rowKey='id'/>
                 </Spin>
                 <CreateA setVisible={this.setCreateVisible} visible={visible} selectedItem={selectedItem}/>
                 <EditA setVisible={this.setEditVisible} visible={visible} selectedItem={selectedItem}/>

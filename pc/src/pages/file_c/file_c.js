@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Table, Checkbox, Button, List, Form, Input, Spin } from 'antd';
+import {Modal, Table, Checkbox, Button, List, Form, Input, Spin, Icon} from 'antd';
 import store from './store';
 import store2 from "../process/store";
 import { observer } from 'mobx-react';
@@ -9,6 +9,8 @@ import request from "../../helpers/request";
 import messageSuccess from '../../helpers/successMessage';
 
 import commonFormProps from '../../config/common-form';
+
+const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 const warnAlert = {
     msg: '已存在该类文件，请确认无误后操作'
@@ -28,7 +30,8 @@ let file_type = ['全部', 'A类文件', 'B类文件', 'C类文件', 'D类文件
 class CreateFileC extends Component {
     state = {
         myKey: Math.random(),
-        checked:false
+        checked:false,
+        loading:false
     };
   columns = [
     {
@@ -68,7 +71,8 @@ class CreateFileC extends Component {
     },
   ];
   render() {
-    let { visible, setVisible, dataSource } = this.props;
+    let { visible, setVisible, dataSource,match } = this.props;
+    console.log(this.props);
     let {resTableC, isDisabledBtn, datas} = store;
     let fileCVisible = visible.file_c;
     let { getFieldDecorator, getFieldValue } = this.props.form;
@@ -96,22 +100,24 @@ class CreateFileC extends Component {
         footer={<ModalFooter />}
         onCancel={() => setVisible(false)}
       >
-        <Table loading={store.loading}
-          title={() => (
-                <Form>
-                    <Form.Item label="效率100编号" {...formProps}>
-                        <Input disabled={true} defaultValue={this.props.wf_id} />
-                    </Form.Item>
-                </Form>
-          )}
-          pagination={{defaultPageSize:8}}
-          dataSource={Array.from(data)}
-          columns={this.columns}
-          size="small"
-          bordered={false}
-          footer={Footer}
-          rowKey="file_id"
-        />
+          <Spin spinning={this.state.loading} tip='加载中...' indicator={antIcon}>
+              <Table
+              title={() => (
+                    <Form>
+                        <Form.Item label="效率100编号" {...formProps}>
+                            <Input disabled={true} defaultValue={this.props.wf_id} />
+                        </Form.Item>
+                    </Form>
+              )}
+              pagination={{defaultPageSize:8}}
+              dataSource={Array.from(data)}
+              columns={this.columns}
+              size="small"
+              bordered={false}
+              footer={Footer}
+              rowKey="file_id"
+            />
+          </Spin>
         <div><p>比对结果:{resTableC.msg}</p></div>
           {!resTableC.table ? null :
               <div>
@@ -135,7 +141,6 @@ class CreateFileC extends Component {
           }
       );
       store.datas = checkedData;
-      console.log(store.datas);
       /*
       if(e.target.checked) {
           checkedData.push(record)
@@ -170,19 +175,22 @@ class CreateFileC extends Component {
   createC = () => {
       let datas = Array.from(store.datas);
       let checkedArr = datas.filter(v => v.checked);
+      console.log(checkedArr);
       let ids = checkedArr.map(i => i.file_id);
-      console.log(ids);
-      datas = datas.map(v =>{
-          v.checked = false;
-          return v});
+    //   datas = datas.map(v =>{
+    //       console.log(v)
+    //       v.checked = false;
+    //       return v});
       store.datas = datas;
       let { getFieldsError } =this.props.form;
       let all_ids = ids.toString();
       let id = this.props.id;
       let canCreate = !hasErrors(getFieldsError());
       if(canCreate){
-              store.changeBtn(true);
-              store.setLoading(true);
+            store.changeBtn(true);
+            this.setState({
+                loading:true
+             });
               request({
             url:'/api/create_file_c',
             data:{
@@ -199,7 +207,9 @@ class CreateFileC extends Component {
             },
             complete: () => {
                 store.changeBtn(false);
-                store.setLoading(false);
+                this.setState({
+                    loading:false
+                });
             }
         })
   }

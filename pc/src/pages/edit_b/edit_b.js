@@ -9,6 +9,7 @@ import exportFile from "../../helpers/export-file";
 import messageSuccess from '../../helpers/successMessage';
 import style from './edit_b.css';
 import ReactDom from 'react-dom';
+
 class EditB extends Component {
   render() {
     let { selectedItem, visible, form } = this.props;
@@ -172,7 +173,6 @@ class EditB extends Component {
   closeModal = () => {
     let { setVisible } = this.props;
     setVisible(false);
-      // ReactDom.unmountComponentAtNode(<Modal/>)
   };
   fetchProcessList = () => {
     request({

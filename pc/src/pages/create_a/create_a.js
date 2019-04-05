@@ -128,7 +128,6 @@ class CreateA extends Component {
                         this.fetchFileAList();
                     },
                     fail: (res) => {
-                        this.warning(res)
                         this.props.setVisible(false);
                     }
                 })
